@@ -48,7 +48,7 @@ New EBS compartments will be added as platform in each One-OE LZ environment, fo
 <img src="../content/One-OE-LZP.png" width="1000" height="value">
 
 > [!NOTE]
-> For extended documentation regarding compartment definition please refer to the [Identity & Access Management CIS Terraform module compartment example](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam/blob/main/compartments/examples/vision/input.auto.tfvars.template).
+> For extended documentation regarding compartment definition please refer to the [Identity & Access Management CIS Terraform module compartment example](https://github.com/oci-landing-zones/terraform-oci-modules-iam/blob/main/compartments/examples/vision/input.auto.tfvars.template).
 
 
 ### **2.2 Groups**
@@ -60,79 +60,12 @@ As part of the deployment the following groups are created in the [Default Ident
 
 | ID     |     NAME                       | TYPE | OBJECTIVES                                  |
 | ------ |  -------------------------- | ------------------------------------------- |---|
-| GRP.00 |  grp-lzp-m-platform-EBS-admins | IAM |Group for managing mgt EBS-related resources |
-| GRP.01 | grp-lzp-p-platform-EBS-admins | IAM| Group for managing Prod EBS-related resources |
-| GRP.02 |  grp-lznp-pp-platform-EBS-admins | IAM | Group for managing Pre-prod EBS-related resources |
-| GRP.03 |  grp-lzp-p-platform-EBS-viewer-role | IAM + EBS RBAC |Group for managing Prod EBS-related resources |
-| GRP.04 |  grp-lzp-p-platform-EBS-admin-role | IAM + EBS RBAC |Group for managing Prod EBS-related resources |
-| GRP.05 |  grp-lzp-pp-platform-EBS-viewer-role | IAM + EBS RBAC |Group for managing Pre-prod EBS-related resources |
-| GRP.06 |  grp-lzp-pp-platform-EBS-admin-role | IAM + EBS RBAC |Group for managing Pre-prod EBS-related resources |
-
-
-
-In our pattern we define two different types of groups:
-
-1. **IAM groups** to manage resources in EBS compartments.
-2. **IAM groups with EBS RBAC** to grant fine-grained access control to EBS specific resources. In addition to IAM, the Kubernetes RBAC Authorizer can enforce additional fine-grained access controls via Kubernetes RBAC roles and clusterroles. A Kubernetes RBAC role is a collection of permissions. For example, a role might include read permission on pods and list permission for pods. A Kubernetes RBAC clusterrole is just like a role, applies across the whole cluster. A Kubernetes RBAC rolebinding maps a role to a user or group, granting that role's permissions to the user or group for resources in a namespace. Similarly, a Kubernetes RBAC clusterrolebinding maps a clusterrole to a user or group, granting that clusterrole's permissions across the entire cluster. IAM and the Kubernetes RBAC Authorizer work together to enable users who have been successfully authorized by at least one of them to complete the requested Kubernetes operation.
-
-In our case as an example we have created the recommended groups for the prod EBS cluster and pre-prod EBS cluster. These are the steps for prod :
-
-1. Create a new group in OCI IAM (e.g grp-lzp-p-platform-EBS-viewer-role, which is already included in the blueprint)
-2. Configure an OCI policy to grant access to the group to access the EBS clusters. (e.g pcy-p-platform-EBS-rbal-viewer-role, which is already included in the blueprint) 
-3. Create Roles and Role Bindings in EBS RBAC to authorize our user to access EBS resources. In a text editor, create the following manifest (for example, called pod-reader-group.yaml) to define the role and a role binding to enable the new IAM group to list pods in the kube-system namespace:
-
-```
-cat > pod-reader-group.yaml << EOF
-  kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: pod-reader-ks
-  namespace: kube-system
-rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: pod-reader-ks-role-binding
-  namespace: kube-system
-subjects:
-- kind: group
-  name: <group-ocid>
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: Role
-  name: pod-reader-ks
-  apiGroup: rbac.authorization.k8s.io
-
-EOF
-```
-4. Create the new role and rolebinding by applying configuration file to the Kubernetes. 
-  ```kubectl apply -f pod-reader-group.yml```
-
-To check all the steps for managing RBAC visit [documentation](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengaboutaccesscontrol.htm#About_Access_Control_and_Container_Engine_for_Kubernetes). There are blogs further covering the steps [Kubernetes RBAC Explained — With Examples](https://medium.com/system-weakness/kubernetes-rbac-explained-with-examples-40e1c5e44c32) or [Demystifying Kubernetes RBAC](https://medium.com/@extio/demystifying-kubernetes-rbac-a-deep-dive-into-role-based-access-control-b3fc5969794a)
+| GRP.00 |  grp-lzp-platform-ebscm-admins | IAM | Group for managing EBS Cloud Manager related resources |
+| GRP.01 |  grp-lzp-p-platform-ebs-admins | IAM | Group for managing EBS Prod related resources |
+| GRP.02 |  grp-lzp-pp-platform-ebs-admins | IAM | Group for managing EBS PreProd related resources |
 
 > [!NOTE]
-> For extended documentation regarding group definition please refer to the [Identity & Access Management CIS Terraform module groups example](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam/blob/main/groups/examples/vision/input.auto.tfvars.template).
-
-### **3.4 Dynamic groups**
-
-The EBS LZ Extension includes the following dynamic group as an example:
-
-* **dg-lzp-p-platform-EBS** for authenticating all instances of the Prod EBS cluster against OCI.
-* **dg-lzp-pp-platform-EBS** for authenticating all instances of the Pre-prod EBS cluster against OCI.
-
-See [OCI documentation](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm) for reference.
-
-TO DO:
-
-https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkloadaccesstoresources.htm
-
-
-> [!NOTE]
-> For extended documentation regarding dynamic groups please refer to the [Identity & Access Management CIS Terraform module dynamic groups example](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam/blob/main/dynamic-groups/examples/vision/input.auto.tfvars.template).
+> For extended documentation regarding group definition please refer to the [Identity & Access Management CIS Terraform module groups example](https://github.com/oci-landing-zones/terraform-oci-cis-landing-zone-iam/blob/main/groups/examples/vision/input.auto.tfvars.template).
 
 
 ### **2.3 Policies**
@@ -140,53 +73,49 @@ https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contenggrantingworkload
 As part of the deployment the following policies are created:
 | Policy                     | Description                                             | Manage resources             | Use resources                   | Inspect resources |
 | -------------------------- | ------------------------------------------------------- | ---------------------------- | ------------------------------- | ----------------- |
-| pcy-p-platform-EBS-admins | Grants group **grp-lzp-p-platform-EBS-admins** permissions. | EBS, Computes, VCN | NSG, Subnets, VNICs, IPs | compartments    |
-| pcy-pp-platform-EBS-admins | Grants group **grp-lzp-pp-platform-EBS-admins** permissions. | EBS, Computes, VCN | NSG, Subnets, VNICs, IPs | compartments    |
-| pcy-m-platform-EBS-admins | Grants group **grp-lzp-m-platform-EBS-admins** permissions. | EBS, Computes, VCN | NSG, Subnets, VNICs, IPs | compartments    |
-| pcy-p-platform-EBS-rbac-admin-role | Grants group **pcy-p-platform-EBS-rbac-admin-role** permissions. | -  | EBS |  -  |
-| pcy-p-platform-EBS-rbac-view-role | Grants group **pcy-p-platform-EBS-rbac-view-role** permissions. | - | EBS |  -  |
-| pcy-pp-platform-EBS-rbac-admin-role | Grants group **pcy-pp-platform-EBS-rbac-admin-role** permissions. | -  | EBS |  -  |
-| pcy-pp-platform-EBS-rbac-view-role | Grants group **pcy-pp-platform-EBS-rbac-view-role** permissions. | -  | EBS |  -   |
-| pcy-root-EBS-hybrid | The **pcy-p-platform-EBS-hybrid** policy is an example of an additional IAM policy required when a cluster and its related resources reside in separate compartments.To use the OCI VCN-Native Pod Networking CNI plugin on top a LZ deployment, where a cluster's related resources (such as node pools, VCN, and VCN resources) are in a different compartment to the cluster itself, you must include this [policy](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengpodnetworking_topic-OCI_CNI_plugin.htm). If you are deploying the flannel option this specific policy is not needed.| instances  | private-ips ,network-security-groups | -    |
-| pcy-p-platform-EBS-secrets| The **pcy-p-platform-EBS-secrets** is an example of a recommended policy to allow applications running on the cluster to be authenticated with OCI through InstancePrincipal, for example to grant access to secrets. To read more about his check this [article](https://vaibhav-sonavane.medium.com/use-instance-principal-to-access-secrets-6c4aee1bfea4) or the [official documentation](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm?source=post_page-----6c4aee1bfea4--------------------------------)| -  | - | -    |
-| pcy-pp-platform-EBS-secrets| The **pcy-pp-platform-EBS-secrets** is an example of a recommended policy to allow applications running on the cluster to be authenticated with OCI through InstancePrincipal, for example to grant access to secrets. To read more about his check this [article](https://vaibhav-sonavane.medium.com/use-instance-principal-to-access-secrets-6c4aee1bfea4) or the [official documentation](https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/callingservicesfrominstances.htm?source=post_page-----6c4aee1bfea4--------------------------------)| -  | - | -    |
-
-Additional policies may be required for using [Capacity Reservations](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengmakingcapacityreservations.htm) or if you choose to [manage the master encryption key yourself](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengencryptingdata.htm). These policies are not included in this example, make sure to add them if they apply to your use case.
-For a detailed review of EBS policies, please refer to the official EBS documentation [here](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengpolicyconfig.htm#Policy_Configuration_for_Cluster_Creation_and_Deployment).
-
+| pcy-lzp-platform-ebscm-admins | Grants group **grp-lzp-platform-ebscm-admins** permissions. | LBs, Computes, DBs | NSG, Subnets, VNICs, IPs |     |
+| pcy-lzp-p-platform-ebs-admins | Grants group **grp-lzp-p-platform-ebs-admins** permissions. | LBs, Computes, DBs | NSG, Subnets, VNICs, IPs |     |
+| pcy-lzp-pp-platform-ebs-admins | Grants group **grp-lzp-pp-platform-ebs-admins** permissions. | LBs, Computes, DBs | NSG, Subnets, VNICs, IPs |    |
+| pcy-lzp-platform-ebscm-network-admins | Grants group **grp-lzp-platform-ebscm-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
+| pcy-lzp-p-platform-ebs-network-admins | Grants group **grp-lzp-p-platform-ebs-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
+| pcy-lzp-pp-platform-ebs-network-admins | Grants group **grp-lzp-pp-platform-ebs-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
+| pcy-lzp-platform-ebscm-security-admins | Grants group **grp-lzp-platform-ebscm-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
+| pcy-lzp-p-platform-ebs-security-admins | Grants group **grp-lzp-p-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
+| pcy-lzp-pp-platform-ebs-security-admins | Grants group **grp-lzp-pp-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
+| pcy-ebs-root-admins | Grants groups **grp-lzp-platform-ebscm-admins** **grp-lzp-p-platform-ebs-admins** **grp-lzp-pp-platform-ebs-admins** permissions. | Marketplace Images | Tags, CloudShell, Budgets, Reports | Compartments, Users, Groups |
 
 > [!NOTE]
->For extended documentation regarding policies refer to the [Identity & Access Management CIS Terraform module policies examples](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam/tree/main/policies/examples) and [policy resource documentation](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-iam/tree/main/policies)
+>For extended documentation regarding policies refer to the [Identity & Access Management CIS Terraform module policies examples](https://github.com/oci-landing-zones/terraform-oci-cis-landing-zone-iam/tree/main/policies/examples) and [policy resource documentation](https://github.com/oci-landing-zones/terraform-oci-cis-landing-zone-iam/tree/main/policies)
 
 
 ## **3. Setup Network Configuration**
 
-The EBS Cluster requires specific subnets. You can review all these requirements in the [EBS documentation](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengnetworkconfig.htm)
+EBS Cloud Manager and the EBS environments require specific network resources. You can review all these requirements in the [EBS documentation](https://docs.oracle.com/cd/E26401_01/doc.122/f35809/T679330T679340.htm#cmg_prepare_customnet)
 
 <img src="../content/ProdNetwork.png" width="1000" height="auto">
 
-For configuring and running the EBS LZ extension Network layer use the following JSON file: [oci_EBS_lz_ext_network.auto.tfvars.json](./oci_EBS_lz_ext_network.auto.tfvars.json).
+For configuring and running the EBS LZ extension Network layer use the following JSON file: [oci_ebs_lz_ext_network.auto.tfvars.json](./oci_ebs_lz_ext_network.auto.tfvars.json).
 
-Our EBS LZ extension will deploy the necessary core resources for both the Production and Pre-production environments included in the ONE-OE blueprint. This example is based on the OCI VCN-Native Pod Networking CNI scenario. Some adjustments would be required for a Flannel setup.
+Our EBS LZ extension will deploy the necessary core resources for both the Production and Pre-production environments included in the ONE-OE blueprint.
 
 <img src="../content/Network.png" width="1000" height="auto">
 
 
 The network layer covers the following resources:
 1. Hub VCN for traffic inspection purposes, centralized DNS service, Internet Gateway, and NAT Gateway.
-1. SpEBS management VCN for EBS management purposes.
-2. SpEBSs VNCs for each environment - one SpEBS Pre-prod EBS VCN and one SpEBS Prod EBS VCN
-3. Subnets - EBS required subnets; like cp,workers,pods,lb,database,fss and bastion subnet.
-4. Service Gateway - Service Gateway for access OCI services in all VCNs
-1. Security List - allowing all ingress/egress
-2. NSGs.
-3. Route Tables.
-4. DRG Attachments - Connect spEBSs with the central Hub
+2. Spoke management VCN for EBS Cloud Manager purposes.
+3. Spoke VNCs for each environment - one Spoke Pre-prod EBS VCN and one Spoke Prod EBS VCN
+4. Subnets - EBS required subnets; like LBs, Apps, FSS, DBs. Including internal and external EBS modules.
+5. Service Gateway - Service Gateway for access OCI services in all VCNs
+6. Security List - allowing all ingress/egress
+7. NSGs.
+8. Route Tables.
+9. DRG Attachments - Connect spokes with the central Hub
 
 In this asset, we use reserved CIDR blocks for the different VCNs, but this can be customized. To learn more about managing your OCI subnetting, we recommend checking this [asset](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/tree/LZ_Subnetting/addons/oci-lz-subnetting).
 
 
-For customization of the pre-defined setup please refer to the [Networking documentation](https://github.com/oracle-quickstart/terraform-oci-cis-landing-zone-networking) for documentation and examples.
+For customization of the pre-defined setup please refer to the [Networking documentation](https://github.com/oci-landing-zones/terraform-oci-cis-landing-zone-networking) for documentation and examples.
 
 ### **3.1 VCNs**
 
@@ -194,9 +123,9 @@ The following table describes the deployed VCNs.
 
 | ID       | NAME           | OBJECTIVES                         |
 | ------  | -------------- | ---------------------------------- |
-| VCN.01  | vcn-fra-lzp-m-platform-EBS | SpEBS VCN dedicated to Mgt EBS set-up |
-| VCN.02  | vcn-fra-lzp-p-platform-EBS | SpEBS VCN dedicated to Prod EBS set-up |
-| VCN.03  | vcn-fra-lzp-pp-platform-EBS | SpEBS VCN dedicated to Preprod EBS set-up |
+| VCN.01  | vcn-fra-lzp-m-ebs | Spoke VCN dedicated to EBSCM set-up |
+| VCN.02  | vcn-fra-lzp-p-ebs | Spoke VCN dedicated to Prod EBS set-up |
+| VCN.03  | vcn-fra-lzp-pp-ebs | Spoke VCN dedicated to Preprod EBS set-up |
 
 
 ### **3.2 Subnets**
@@ -205,20 +134,22 @@ The following table describes the deployed Subnets added for each environment EB
 
 | ID    |  NAME             | OBJECTIVES                |
 | ----- | ---------------- | ------------------------- |
-| SN.00 |  sn-fra-lzp-p-platform-EBS-lb | EBS private Prod lb subnet |
-| SN.01 |  sn-fra-lzp-p-platform-EBS-cp | EBS Prod control plane subnet |
-| SN.02 |  sn-fra-lzp-p-platform-EBS-workers | EBS Prod workers subnet |
-| SN.03 |  sn-fra-lzp-p-platform-EBS-pods| EBS Prod pods subnet |
-| SN.04 |  sn-fra-lzp-p-platform-EBS-db| db Prod subnet |
-| SN.05 |  sn-fra-lzp-p-platform-EBS-bastion| Prod bastion subnet |
-| SN.06 |  sn-fra-lzp-p-platform-EBS-fss| Prod fss subnet |
-| SN.07 |  sn-fra-lzp-pp-platform-EBS-lb | EBS PreProd private lb subnet |
-| SN.08 |  sn-fra-lzp-pp-platform-EBS-cp | EBS PreProd control plane subnet |
-| SN.09 |  sn-fra-lzp-pp-platform-EBS-workers | EBS PreProd workers subnet |
-| SN.10 |  sn-fra-lzp-pp-platform-EBS-pods| EBS PreProd pods subnet |
-| SN.11 |  sn-fra-lzp-pp-platform-EBS-db| db PreProd subnet |
-| SN.12 |  sn-fra-lzp-pp-platform-EBS-bastion| PreProd bastion subnet |
-| SN.13 |  sn-fra-lzp-pp-platform-EBS-fss| fss PreProd subnet |
+| SN.01 |  sn-fra-lzp-m-ebs-lb | EBSCM lb subnet |
+| SN.02 |  sn-fra-lzp-m-ebs-app | EBSCM app subnet |
+| SN.03 |  sn-fra-lzp-p-ebs-lb-ext | EBS Prod external lb subnet |
+| SN.04 |  sn-fra-lzp-p-ebs-lb-int | EBS Prod internal lb subnet |
+| SN.05 |  sn-fra-lzp-p-ebs-app-ext | EBS Prod external app subnet |
+| SN.06 |  sn-fra-lzp-p-ebs-app-int | EBS Prod internal app subnet |
+| SN.07 |  sn-fra-lzp-p-ebs-fss | EBS Prod fss subnet |
+| SN.08 |  sn-fra-lzp-p-ebs-db | EBS Prod db subnet |
+| SN.09 |  sn-fra-lzp-p-ebs-db-bck | EBS Prod db exadata backup subnet |
+| SN.10 |  sn-fra-lzp-pp-ebs-lb-ext | EBS PreProd external lb subnet |
+| SN.11 |  sn-fra-lzp-pp-ebs-lb-int | EBS PreProd internal lb subnet |
+| SN.12 |  sn-fra-lzp-pp-ebs-app-ext | EBS PreProd external app subnet |
+| SN.13 |  sn-fra-lzp-pp-ebs-app-int | EBS PreProd internal app subnet |
+| SN.14 |  sn-fra-lzp-pp-ebs-fss | EBS PreProd fss subnet |
+| SN.15 |  sn-fra-lzp-pp-ebs-db | EBS PreProd db subnet |
+| SN.16 |  sn-fra-lzp-pp-ebs-db-bck | EBS PreProd db exadata backup subnet |
 
 ### **3.3 Route Tables (RTs)**
 
@@ -226,16 +157,22 @@ The following table describes the deployed Route Tables:
 
 | ID    |  NAME               | OBJECTIVES                            |
 | ----- |  ------------------ | ------------------------------------- |
-| RT.00 | rt-fra-lzp-p-lb | EBS Load Balancer Prod subnet route table |
-| RT.01 | rt-fra-lzp-p-cp | EBS Control Plane Prod subnet route table |
-| RT.02 | rt-fra-lzp-p-pods | EBS Pods Prod subnet route table |
-| RT.03 | rt-fra-lzp-p-workers | EBS Workers Prod subnet route table |
-| RT.04 | rt-fra-lzp-p-generic | EBS Generic Prod subnet route table |
-| RT.00 | rt-fra-lzp-pp-lb | EBS Load Balancer PreProd subnet route table |
-| RT.01 | rt-fra-lzp-pp-cp | EBS Control Plane PreProd subnet route table |
-| RT.02 | rt-fra-lzp-pp-pods | EBS Pods PreProd subnet route table |
-| RT.03 | rt-fra-lzp-pp-workers | EBS Workers PreProd subnet route table |
-| RT.04 | rt-fra-lzp-pp-generic | EBS Generic PreProd subnet route table |
+| RT.01 |  rt-fra-lzp-m-ebs-lb | EBSCM lb subnet route table |
+| RT.02 |  rt-fra-lzp-m-ebs-app | EBSCM app subnet route table |
+| RT.03 |  rt-fra-lzp-p-ebs-lb-ext | EBS Prod external lb subnet route table |
+| RT.04 |  rt-fra-lzp-p-ebs-lb-int | EBS Prod internal lb subnet route table |
+| RT.05 |  rt-fra-lzp-p-ebs-app-ext | EBS Prod external app subnet route table |
+| RT.06 |  rt-fra-lzp-p-ebs-app-int | EBS Prod internal app subnet route table |
+| RT.07 |  rt-fra-lzp-p-ebs-fss | EBS Prod fss subnet route table |
+| RT.08 |  rt-fra-lzp-p-ebs-db | EBS Prod db subnet route table |
+| RT.09 |  rt-fra-lzp-p-ebs-db-bck | EBS Prod db exadata backup subnet route table |
+| RT.10 |  rt-fra-lzp-pp-ebs-lb-ext | EBS PreProd external lb subnet route table |
+| RT.11 |  rt-fra-lzp-pp-ebs-lb-int | EBS PreProd internal lb subnet route table |
+| RT.12 |  rt-fra-lzp-pp-ebs-app-ext | EBS PreProd external app subnet route table |
+| RT.13 |  rt-fra-lzp-pp-ebs-app-int | EBS PreProd internal app subnet route table |
+| RT.14 |  rt-fra-lzp-pp-ebs-fss | EBS PreProd fss subnet route table |
+| RT.15 |  rt-fra-lzp-pp-ebs-db | EBS PreProd db subnet route table |
+| RT.16 |  rt-fra-lzp-pp-ebs-db-bck | EBS PreProd db exadata backup subnet route table |
 
 
 ### **3.4 Security Lists (SLs)**
@@ -243,45 +180,74 @@ The following table describes the deployed Security Lists (SLs):
 
 | ID    |  NAME                | OBJECTIVES                              |
 | ----- |  ------------------- | --------------------------------------- |
-| SL.00 | sl-lzp-p-platform-pods | EBS Prod pods subnet security list |
-| SL.01 | sl-lzp-p-platform-workers| EBS Prod Workers subnet security list |
-| SL.02 | sl-lzp-d-platform-lb | EBS Prod Load Balancer subnet security list |
-| SL.03 | sl-lzp-p-platform-cp | EBS Prod Control Plane subnet security list |
-| SL.04 | sl-lzp-pp-platform-pods | EBS Pre-prod pods subnet security list |
-| SL.05 | sl-lzp-pp-platform-workers| EBS Pre-prod Workers subnet security list |
-| SL.06 | sl-lzp-pp-platform-lb | EBS Pre-prod Load Balancer  subnet security list |
-| SL.07 | sl-lzp-pp-platform-cp | EBS Pre-prod Control Plane subnet security list |
+| SL.01 |  sl-fra-lzp-m-ebs-lb | EBSCM lb subnet security list |
+| SL.02 |  sl-fra-lzp-m-ebs-app | EBSCM app subnet security list |
+| SL.03 |  sl-fra-lzp-p-ebs-lb-ext | EBS Prod external lb subnet security list |
+| SL.04 |  sl-fra-lzp-p-ebs-lb-int | EBS Prod internal lb subnet security list |
+| SL.05 |  sl-fra-lzp-p-ebs-app-ext | EBS Prod external app subnet security list |
+| SL.06 |  sl-fra-lzp-p-ebs-app-int | EBS Prod internal app subnet security list |
+| SL.07 |  sl-fra-lzp-p-ebs-fss | EBS Prod fss subnet security list |
+| SL.08 |  sl-fra-lzp-p-ebs-db | EBS Prod db subnet security list |
+| SL.09 |  sl-fra-lzp-p-ebs-db-bck | EBS Prod db exadata backup subnet security list |
+| SL.10 |  sl-fra-lzp-pp-ebs-lb-ext | EBS PreProd external lb subnet security list |
+| SL.11 |  sl-fra-lzp-pp-ebs-lb-int | EBS PreProd internal lb subnet security list |
+| SL.12 |  sl-fra-lzp-pp-ebs-app-ext | EBS PreProd external app subnet security list |
+| SL.13 |  sl-fra-lzp-pp-ebs-app-int | EBS PreProd internal app subnet security list |
+| SL.14 |  sl-fra-lzp-pp-ebs-fss | EBS PreProd fss subnet security list |
+| SL.15 |  sl-fra-lzp-pp-ebs-db | EBS PreProd db subnet security list |
+| SL.16 |  sl-fra-lzp-pp-ebs-db-bck | EBS PreProd db exadata backup subnet security list|
+
+### **3.5 Network Security Groups (NSGs)**
+The following table describes the deployed Security Lists (SLs):
+
+| ID    |  NAME                | OBJECTIVES                              |
+| ----- |  ------------------- | --------------------------------------- |
+| NSG.01 |  nsg-fra-lzp-m-ebs-lb | EBSCM lb subnet network security groups |
+| NSG.02 |  nsg-fra-lzp-m-ebs-app | EBSCM app subnet network security groups |
+| NSG.03 |  nsg-fra-lzp-p-ebs-lb-ext | EBS Prod external lb subnet network security groups |
+| NSG.04 |  nsg-fra-lzp-p-ebs-lb-int | EBS Prod internal lb subnet network security groups |
+| NSG.05 |  nsg-fra-lzp-p-ebs-app-ext | EBS Prod external app subnet network security groups |
+| NSG.06 |  nsg-fra-lzp-p-ebs-app-int | EBS Prod internal app subnet network security groups |
+| NSG.07 |  nsg-fra-lzp-p-ebs-fss | EBS Prod fss subnet network security groups |
+| NSG.08 |  nsg-fra-lzp-p-ebs-db | EBS Prod db subnet network security groups |
+| NSG.09 |  nsg-fra-lzp-p-ebs-db-bck | EBS Prod db exadata backup subnet network security groups |
+| NSG.10 |  nsg-fra-lzp-pp-ebs-lb-ext | EBS PreProd external lb subnet network security groups |
+| NSG.11 |  nsg-fra-lzp-pp-ebs-lb-int | EBS PreProd internal lb subnet network security groups |
+| NSG.12 |  nsg-fra-lzp-pp-ebs-app-ext | EBS PreProd external app subnet network security groups |
+| NSG.13 |  nsg-fra-lzp-pp-ebs-app-int | EBS PreProd internal app subnet network security groups |
+| NSG.14 |  nsg-fra-lzp-pp-ebs-fss | EBS PreProd fss subnet network security groups |
+| NSG.15 |  nsg-fra-lzp-pp-ebs-db | EBS PreProd db subnet network security groups |
+| NSG.16 |  nsg-fra-lzp-pp-ebs-db-bck | EBS PreProd db exadata backup subnet network security groups|
+
+### **3.6 Gateways**
 
 
-### **3.5 Gateways**
-
-
-#### **3.5.1 Dynamic Routing Gateway (DRGs) Attachments**
+#### **3.6.1 Dynamic Routing Gateway (DRGs) Attachments**
 
 The following tables describe the deployed DRG Attachments.
 
 | ID      |  NAME                      | OBJECTIVES                                   |
 | ------- |  ------------------------- | -------------------------------------------- |
-| DRGA.00 |  drgatt-vcn-fra-lzp-p-platform-EBS | DRG Attachment for the EBS Prod spEBS to the hub |
-| DRGA.00 |  drgatt-vcn-fra-lzp-pp-platform-EBS | DRG Attachment for the EBS Preprod spEBS to the hub 
-| DRGA.00 |  drgatt-vcn-fra-lzp-m-platform-EBS | DRG Attachment for the EBS Mgt spEBS to the hub 
+| DRGA.01 |  drgatt-vcn-fra-lzp-m-ebs | DRG Attachment for the EBSCM spoke to the hub 
+| DRGA.02 |  drgatt-vcn-fra-lzp-p-ebs | DRG Attachment for the EBS Prod spoke to the hub |
+| DRGA.03 |  drgatt-vcn-fra-lzp-pp-ebs | DRG Attachment for the EBS PreProd spoke to the hub 
 
 
-#### **3.5.2 Service Gateway**
+#### **3.6.2 Service Gateway**
 
 
 The following table describes the proposed Service Gateways added for each environment EBS platform:
 
 | ID    |  NAME          | OBJECTIVES           |
 | ----- |  ------------- | -------------------- |
-| SGW.00 |  sgw-fra-lzp-p-EBS | SGW EBS Prod VCN. |
-| SGW.00 |  sgw-fra-lzp-pp-EBS | SGW EBS Pre-prod VCN. |
-| SGW.00 |  sgw-fra-lzp-m-EBS | SGW EBS Mgt VCN. |
+| SGW.01 |  sgw-fra-lzp-m-ebs | SGW EBSCM VCN. |
+| SGW.02 |  sgw-fra-lzp-p-ebs | SGW EBS Prod VCN. |
+| SGW.03 |  sgw-fra-lzp-pp-ebs | SGW EBS PreProd VCN. |
 
 
 ## **4. JSON files Required Changes**
 
-If ONE-OE is used as the foundation Landing Zone with output saving enabled, running this EBS extension with the added dependencies will automatically match the keys with the correct OCIDs. No changes to the JSON file are needed. Therefore, you can skip this section and move to point 5.
+If ONE-OE is used as the foundation Landing Zone with output saving enabled, running this EBS extension with the added dependencies will automatically match the keys with the correct OCIDs. No changes to the JSON file are needed. Therefore, you can skip this section and move to section 5.
 
 If you are using the CIS Landing Zone or another OCI Landing Zone option, this configuration file requires modification to reference the OCIDs of the existing deployed resources. Locate the values indicated below and replace them with the correct OCIDs.
 
@@ -301,7 +267,7 @@ Policies contain compartment paths.
 The paths can change based on the modification in the previous [Compartments](#21-compartments) section. The paths need to be updated following the OCI [Policies and Compartment hierarchy](https://docs.oracle.com/en-us/iaas/Content/Identity/Concepts/policies.htm#hierarchy).
 
 
-## **4. Deploy**
+## **5. Deploy**
 
 Use the magic button provided in the summary section to deploy the EBS LZ extension using [Oracle Resource Manager (ORM)](/../../../commons/content/orm.md) or use [Terraform CLI](../../../commons/content/terraform.md).
 
