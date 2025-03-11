@@ -13,11 +13,13 @@
   - [**3.2 Subnets**](#32-subnets)
   - [**3.3 Route Tables (RTs)**](#33-route-tables-rts)
   - [**3.4 Security Lists (SLs)**](#34-security-lists-sls)
-  - [**3.5 Gateways**](#35-gateways)
-    - [**3.5.1 Dynamic Routing Gateway (DRGs) Attachments**](#351-dynamic-routing-gateway-drgs-attachments)
-    - [**3.5.2 Service Gateway**](#352-service-gateway)
+  - [**3.5 Network Security Groups (NSGs)**](#35-network-security-groups-nsgs)
+  - [**3.6 Gateways**](#36-gateways)
+    - [**3.6.1 Dynamic Routing Gateway (DRGs) Attachments**](#361-dynamic-routing-gateway-drgs-attachments)
+    - [**3.6.2 Service Gateway**](#362-service-gateway)
+    - [**3.6.3 NAT Gateway**](#363-nat-gateway)
 - [**4. JSON files Required Changes**](#4-json-files-required-changes)
-- [**4. Deploy**](#4-deploy)
+- [**5. Deploy**](#5-deploy)
 
 
 ## **1. Summary**
@@ -79,9 +81,9 @@ As part of the deployment the following policies are created:
 | pcy-lzp-platform-ebscm-network-admins | Grants group **grp-lzp-platform-ebscm-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
 | pcy-lzp-p-platform-ebs-network-admins | Grants group **grp-lzp-p-platform-ebs-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
 | pcy-lzp-pp-platform-ebs-network-admins | Grants group **grp-lzp-pp-platform-ebs-admins** network permissions. | IPs | NSG, Subnets, VNICs,  | VCNs |
-| pcy-lzp-platform-ebscm-security-admins | Grants group **grp-lzp-platform-ebscm-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
-| pcy-lzp-p-platform-ebs-security-admins | Grants group **grp-lzp-p-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
-| pcy-lzp-pp-platform-ebs-security-admins | Grants group **grp-lzp-pp-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Pugins |
+| pcy-lzp-platform-ebscm-security-admins | Grants group **grp-lzp-platform-ebscm-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Plugins |
+| pcy-lzp-p-platform-ebs-security-admins | Grants group **grp-lzp-p-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Plugins |
+| pcy-lzp-pp-platform-ebs-security-admins | Grants group **grp-lzp-pp-platform-ebs-admins** security permissions. | Bastion Sessions, Events, Alarms, Metrics | Vaults, Bastion | VSS, Logging, Keys, Plugins |
 | pcy-ebs-root-admins | Grants groups **grp-lzp-platform-ebscm-admins** **grp-lzp-p-platform-ebs-admins** **grp-lzp-pp-platform-ebs-admins** permissions. | Marketplace Images | Tags, CloudShell, Budgets, Reports | Compartments, Users, Groups |
 
 > [!NOTE]
@@ -244,6 +246,17 @@ The following table describes the proposed Service Gateways added for each envir
 | SGW.02 |  sgw-fra-lzp-p-ebs | SGW EBS Prod VCN. |
 | SGW.03 |  sgw-fra-lzp-pp-ebs | SGW EBS PreProd VCN. |
 
+#### **3.6.3 NAT Gateway**
+
+
+The following table describes the proposed Service Gateways added for each environment EBS platform:
+
+| ID    |  NAME          | OBJECTIVES           |
+| ----- |  ------------- | -------------------- |
+| NGW.01 |  ngw-fra-lzp-m-ebs | NGW EBSCM VCN. |
+| NGW.02 |  ngw-fra-lzp-p-ebs | NGW EBS Prod VCN. |
+| NGW.03 |  ngw-fra-lzp-pp-ebs | NGW EBS PreProd VCN. |
+
 
 ## **4. JSON files Required Changes**
 
@@ -271,10 +284,7 @@ The paths can change based on the modification in the previous [Compartments](#2
 
 Use the magic button provided in the summary section to deploy the EBS LZ extension using [Oracle Resource Manager (ORM)](/../../../commons/content/orm.md) or use [Terraform CLI](../../../commons/content/terraform.md).
 
-This operation creates a default routing configuration. To complete the network layer setup, deploy the firewalls and update the routing in the hub to prepare for deploying the EBS cluster. All these steps are defined in this [POST operation](../1_EBS_extension/1.1_Network_post_updates/readme.md). Once completed, everything will be ready for onboarding an EBS cluster.
-
-**NOTE:**
-**Dynamic groups matching rules** have associated OCIDs that cannot be referenced using the dependencies feature. After the first apply job, you need to update the CMP-LZP-P-PLATFORM-KEY and CMP-LZP-PP-PLATFORM-KEY attributes with the correct OCIDs, and then run a second apply job.
+This operation creates a default routing configuration. To complete the network layer setup, deploy the firewalls and update the routing in the hub to prepare for deploying EBS Cloud Manager and EBS environments. All these steps are defined in this [POST operation](../1_EBS_extension/1.1_Network_post_updates/readme.md). Once completed, everything will be ready for onboarding EBS Cloud Manager.
 
 You can now proceed with [Step 2](../2_EBS/).
 
