@@ -1,10 +1,6 @@
-# Firewall and RT updates <!-- omit from toc -->
-## **Table of Contents** <!-- omit from toc -->
-- [**1. Routing**](#1-routing)
+# Firewalls and RT updates <!-- omit from toc -->
 
-&nbsp; 
-
-## **1. Routing**
+## **Routing**
 
 In all of our OCI Landing Zone models, we recommend implementing a Hub-and-Spoke network architecture. This approach enables you to deploy a firewall in the hub for traffic inspection, ensuring enhanced security. To save time in the design phase with our customers, we have included four hub models. You can choose to use either our OCI native firewall or a third-party solution, such as Fortinet or Palo Alto. Explore the four models [here](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/tree/master/addons/oci-hub-models).
 
@@ -12,10 +8,10 @@ In this case we have selected model A that is equipped with two OCI Network Fire
 
 Model A offer two options: a **Light Version** (No Cost), where a virtual machine (VM) is deployed with a load balancer, and a **Complete Version** (With Cost), which includes the deployment of a firewalls.
 
-The next Diagram shows the routing included in the [ONE-OE Hub A Deployment (Light Version - No Cost)](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/addons/oci-hub-models/hub_b/readme.md):
+The next Diagram shows the routing included in the [ONE-OE Hub A Deployment (Light Version - No Cost)](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/addons/oci-hub-models/hub_a/readme.md):
 <img src="../../content/Routing_ONE-OE_HubA.png" width="1000" height="auto">
 
-The next Diagram shows  rounting included in the EBS Ext LZ:
+The next Diagram shows the routing included in the EBS Ext LZ:
 <img src="../../content/Routing_EBS_ext.png" width="1000" height="auto">
 
 The next steps are to add the firewall and update the corresponding routes. To accomplish this, we need to follow the steps outlined in the [Hub A Deployment (Light Version - No Cost)](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/addons/oci-hub-models/hub_a/readme.md)
@@ -40,11 +36,20 @@ For this EBS LZ EXT we provided a [customized Json file](../oci_ebs_lz_ext_open_
 
 You can use the find & replace of the IDE of your choice.
 
-**d.** Edit the ORM stack (STEP1) and replace the original Network JSON configuration file with the new **oci_ebs_lz_ext_open_lz_post_hub_a_network_light.auto.tfvars** updated file.
+**d.** Edit the ORM stack (STEP1) and replace the original Network JSON configuration file with the new **oci_ebs_lz_ext_open_lz_post_hub_a_network_light.auto.tfvars** file.
 
-**e.** Run Plan & Apply.
+**e.** Run Plan & Apply to populate the new changes.
 
-This is the diagram that show the final Network configuration:
+This is the diagram that shows the Network after adding the post STEP1 configuration:
+
+<img src="../../content/PostSTEP1.png" width="1000" height="auto">
+
+**f.** Update the file **oci_ebs_lz_ext_network_post.auto.tfvars** adding your DRG OCID.
+- Replace the "**"Update with DRG OCID"**" with the OCID of the DRG
+
+**g.** Edit the ORM stack (STEP2) replacing the original Network JSON configuration with the new **oci_ebs_lz_ext_network_post.auto.tfvars** file.
+
+This is the diagram that shows the final Network configuration:
 
 <img src="../../content/Final_Routing.png" width="1000" height="auto">
 
