@@ -55,8 +55,9 @@ This is the diagram that shows the Network after adding the post STEP1 configura
 
 **6.**
 
-Update the file **oci_ebs_lz_ext_network_post.auto.tfvars** adding your DRG OCID.
-- Replace the "**"Update with DRG OCID"**" with the OCID of the DRG
+For this EBS LZ EXT we provided a [customized Json file](../oci_ebs_lz_ext_network_post.auto.tfvars.json).
+
+- Replace the "**Update with DRG OCID**" with the OCID of the DRG
 
 **7.**
 
