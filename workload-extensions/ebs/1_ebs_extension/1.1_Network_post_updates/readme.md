@@ -18,13 +18,18 @@ The next steps are to add the firewall and update the corresponding routes. To a
 
 For demo purposes, we will deploy a dummy VM instead of a firewall. If needed, the steps to deploy the firewall are also provided on the previous page
 
-**a.** Deploy a dummy FW VM for the DMZ and INTERNAL FWs following these steps [How to create a dummy FW VM](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/commons/content/howto_create_dummy_fw_vm.md)
+**1.**
+
+Deploy a dummy FW VM for the DMZ and INTERNAL FWs following these steps [How to create a dummy FW VM](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/commons/content/howto_create_dummy_fw_vm.md)
 
 <img src="../../content/Instances.png" width="1000" height="auto">
 
-**b.** Identify the Private IP OCID of your firewalls following these [steps](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/commons/content/howto_identify_private_ip_ocid_vm_vnic.md)
+**2.**
 
-**c.**
+Identify the Private IP OCID of your firewalls following these [steps](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/blob/master/commons/content/howto_identify_private_ip_ocid_vm_vnic.md)
+
+**3.**
+
 You can find a generic JSON file for HUB A checking our [hub models asset](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/tree/master/addons/oci-hub-models/hub_a).
 For this EBS LZ EXT we provided a [customized Json file](../oci_ebs_lz_ext_open_lz_post_hub_a_network_light.auto.tfvars.json).
 
@@ -36,18 +41,26 @@ For this EBS LZ EXT we provided a [customized Json file](../oci_ebs_lz_ext_open_
 
 You can use the find & replace of the IDE of your choice.
 
-**d.** Edit the ORM stack (STEP1) and replace the original Network JSON configuration file with the new **oci_ebs_lz_ext_open_lz_post_hub_a_network_light.auto.tfvars** file.
+**4.**
 
-**e.** Run Plan & Apply to populate the new changes.
+Edit the ORM stack (STEP1) and replace the original Network JSON configuration file with the new **oci_ebs_lz_ext_open_lz_post_hub_a_network_light.auto.tfvars** file.
+
+**5.**
+
+Run Plan & Apply to populate the new changes.
 
 This is the diagram that shows the Network after adding the post STEP1 configuration:
 
 <img src="../../content/PostSTEP1.png" width="1000" height="auto">
 
-**f.** Update the file **oci_ebs_lz_ext_network_post.auto.tfvars** adding your DRG OCID.
+**6.**
+
+Update the file **oci_ebs_lz_ext_network_post.auto.tfvars** adding your DRG OCID.
 - Replace the "**"Update with DRG OCID"**" with the OCID of the DRG
 
-**g.** Edit the ORM stack (STEP2) replacing the original Network JSON configuration with the new **oci_ebs_lz_ext_network_post.auto.tfvars** file.
+**7.**
+
+Edit the ORM stack (STEP2) replacing the original Network JSON configuration with the new **oci_ebs_lz_ext_network_post.auto.tfvars** file.
 
 This is the diagram that shows the final Network configuration:
 
