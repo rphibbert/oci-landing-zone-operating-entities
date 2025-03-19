@@ -25,7 +25,7 @@ These are the required steps to provision the EBS landing zone extension:
 
  1. The [One-OE](https://github.com/oci-landing-zones/terraform-oci-open-lz/tree/master/blueprints/one-oe) LZ is a requirement and needs to be deployed before continuing, in this example we are choosing One-Stack Deployment with CIS Level 1 Security Controls + Hub model A (no cost version). Any other OCI landing zone, such as a [CIS landing zone](https://github.com/oci-landing-zones/oci-cis-landingzone-quickstart), [OCI Core Landing Zone](https://github.com/oci-landing-zones/terraform-oci-core-landingzone) or [Multi-OE](https://github.com/oci-landing-zones/oci-landing-zone-operating-entities/tree/master/blueprints/multi-oe/generic_v1/runtime), can be deployed as a baseline landing zone but may require some minor customizations.
  2. Deploy the base infrastructure from the [Step 1 - EBS Extension](1_ebs_extension/)
- 3. Deploy **EBS Cloud Manager** in [Step 2](2_ebscm/)
+ 3. Deploy **EBS Cloud Manager** in [Step 2 - EBS Cloud Manager](2_ebscm/)
 
 ## Acknowledgments <!-- omit from toc -->
 * **Authors**: *Richard Hibbert* (Landing Zones Specialist) 

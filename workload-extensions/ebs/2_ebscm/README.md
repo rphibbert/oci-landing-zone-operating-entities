@@ -28,7 +28,7 @@ The following are the initial resources for deploying the EBS Cloud Manager comp
 The following are some of the resources required to be selected in the Oracle E-Business Suite Cloud Manager Configure Script:
 
 | Resource | Name |
-| --- | --- | --- |
+| --- | --- |
 | Group | grp-lzp-platform-ebscm-admins |
 | Load Balancer Visibility Type | Private |
 | Load Balancer Subnet | sn-fra-lzp-m-ebs-lb |
