@@ -13,7 +13,7 @@
 
 ## **2. EBS Cloud Manager Deployment**
 
-To deploy EBS Cloud Manager the next step is to create the EBS Cloud Manager compute instance.
+To deploy EBS Cloud Manager the next step is to create and configure the EBS Cloud Manager compute instance.
 
 The detailed steps for this are documented [here](https://docs.oracle.com/cd/E26401_01/doc.122/f35809/T679330T679339.htm#T680521)
 
@@ -32,6 +32,9 @@ The following are some of the resources required to be selected in the Oracle E-
 | Group | grp-lzp-platform-ebscm-admins |
 | Load Balancer Visibility Type | Private |
 | Load Balancer Subnet | sn-fra-lzp-m-ebs-lb |
+
+> [!NOTE]
+> The EBS Landing Zone Extension includes both Security Lists and Network Security Groups so that either may be utilized.
 
 
 &nbsp;
