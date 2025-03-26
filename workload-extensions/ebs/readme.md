@@ -15,7 +15,7 @@ The EBS Landing Zone Extension is a secure cloud environment, designed with best
 This workload extension uses the [One-OE](https://github.com/oci-landing-zones/terraform-oci-open-lz/tree/master/blueprints/one-oe) Blueprint as the reference Landing Zone and guides the deployment of EBS Cloud Manager on top of it.
 
 > [!NOTE]
-> The previous version of the EBS Landing Zone Extension designed as an extension to the [CIS landing zone](https://github.com/oci-landing-zones/oci-cis-landingzone-quickstart) is archived [here](0_archive)
+> The previous version of the EBS Landing Zone Extension designed as an extension to the CIS landing zone has been archived [here](0_archive)
 
 &nbsp;
 
