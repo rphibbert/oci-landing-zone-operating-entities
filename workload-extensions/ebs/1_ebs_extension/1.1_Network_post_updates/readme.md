@@ -61,11 +61,19 @@ For this EBS LZ EXT we provided a [customized Json file](../oci_ebs_lz_ext_netwo
 
 **7.**
 
-Edit the ORM stack (STEP2) replacing the original Network JSON configuration with the new **oci_ebs_lz_ext_network_post.auto.tfvars** file.
+Update file **oci_ebs_lz_ext_network_post.auto.tfvars** adding your DRG OCID and edit the ORM stack (STEP2) replacing the original Network JSON configuration with the updated file.
+
+Run Plan & Apply to populate the new changes.
 
 This is the diagram that shows the final Network configuration:
 
 <img src="../../content/Final_Routing.png" width="1000" height="auto">
+
+ **8.**
+
+Finally, this will be the complete picture after deploying the EBS Cloud Manager and EBS Environments.
+
+<img src="../../content/Complete.png" width="1000" height="auto">
 
 &nbsp;
 
