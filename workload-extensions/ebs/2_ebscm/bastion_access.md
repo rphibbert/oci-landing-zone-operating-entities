@@ -1,13 +1,21 @@
-# EBS Cloud Manager Set-up <!-- omit from toc -->
-&nbsp; 
+# Bastion Acess <!-- omit from toc -->
+
+## **Table of Contents** <!-- omit from toc -->
+
+- [**1. Summary**](#1-summary)
+- [**2. Setup IAM Configuration**](#2-setup-iam-configuration)
+  - [**2.1. Compartments**](#21-compartments)
+  - [**2.2 Groups**](#22-groups)
+  - [**3.4 Dynamic groups**](#34-dynamic-groups)
+  - [**2.3 Policies**](#23-policies)
+- [**3. Setup Network Configuration**](#3-setup-network-configuration)
 
 ## **1. Summary**
 
-|                      |                                                       |
-| -------------------- | ----------------------------------------------------- |
-| **NAME**         | EBS Cloud Manager set-up                                    |
-| **OBJECTIVE**        | Provision Oracle E-Business Suite Cloud Manager as a new platform on the EBS Landing Zone Extensions. |
-| **TARGET RESOURCES** | EBS Cloud Manager                                                  |
+Whilst deploying resources to OCI we may have the situation where the connectivity to the internet or to on-premise is not available.
+In order to access the deployed services in this situation we can utilze the Bastion service.
+
+This document will outline the necessary steps to access the EBS Cloud Manager and E-Business Suite environments.
 
 &nbsp; 
 
