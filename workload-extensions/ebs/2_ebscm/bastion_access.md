@@ -75,7 +75,7 @@ Select and Edit OAuth configuration:
 
 Update Redirect URL and Post-logout redirect URL to include the domain.
 
-Finally, add your domain entry to your hosts file, eg:
+Add your domain entry to your hosts file, eg:
 ```
 ##
 # Host Database
