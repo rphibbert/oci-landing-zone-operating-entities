@@ -6,6 +6,7 @@
 - [**2. EBS Cloud Manager UI Connection**](#2-ebs-cloud-manager-ui-connection)
   - [**2.1 Set EBS Cloud Manager URL**](#21-set-ebs-cloud-manager-url)
   - [**2.2 Create EBS Cloud Manager UI Bastion Session**](#22-create-ebs-cloud-manager-ui-bastion-session)
+- [**3. EBS Environment Access**](#3-ebs-environment-access)
 
 ## **1. EBS Cloud Manager SSH Connection**
 
