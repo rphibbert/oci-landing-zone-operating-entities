@@ -23,10 +23,12 @@ Create the Bastion Session with the EBSCM Apps server as the target using port 2
 
 <img src="../content/BastionEBSCM_SSH.png" width="600" height="value">
 
+Once it has been created in the Actions menu for the session, select View SSH command.
+
 You can then connect to the server using the following command in a terminal window:
 
 ```
-ssh -i <private_Key> -N -L <local_Port>:<ip_ebscm_app>:22 -p 22 ocid1.bastionsession.oc1.eu-frankfurt-1.amaaaaaaqwelykqahqc5bmmjcpzwvi7skffsc5y2kijk3dwvj4xsyloc2lga@host.bastion.eu-frankfurt-1.oci.oraclecloud.com
+ssh -i <private_Key> -N -L <local_Port>:<ip_ebscm_app>:22 -p 22 <bastion_session_ocid>
 ```
 
 In the above example replace the parameters in brackets as below:
@@ -36,6 +38,7 @@ In the above example replace the parameters in brackets as below:
 | <private_Key> | Path to your private key for EBSCM, eg: .ssh/ssh-key-ebscm.key |
 | <local_Port> | Any unused local port, eg: 4433 |
 | <ip_ebscm_app> | The IP address of the EBSCM Application server |
+| <bastion_session_ocid> | The OCID of the Bastion session |
 
 Then you can use another terminal session to open a session on the EBSCM server.
 
@@ -98,13 +101,14 @@ In the above example 10.0.8.185 is the EBS Load Balancer
 
 You can then connect to the server using the following command in a terminal window:
 ```
-sudo ssh -i <private_Key> -N -L 443:<ip_ebscm_lb>:443 -p 22 ocid1.bastionsession.oc1.eu-frankfurt-1.amaaaaaaqwelykqa3iutyevdxitq7se36y33rmqbqk3l5jgd6d3rd3tr4uca@host.bastion.eu-frankfurt-1.oci.oraclecloud.com
+sudo ssh -i <private_Key> -N -L 443:<ip_ebscm_lb>:443 -p 22 <bastion_session_ocid>
 ```
 
 | Parameter | Description |
 | --- | --- |
 | <private_Key> | Path to your private key for EBSCM, eg: .ssh/ssh-key-ebscm.key |
 | <ip_ebscm_lb> | The IP address of the EBSCM Load Balancer |
+| <bastion_session_ocid> | The OCID of the Bastion session |
 
 > [!NOTE]
 > Depending upon your OS you may not require the sudo command
@@ -129,7 +133,7 @@ Add your EBS domain entry to your hosts file, eg:
 ::1             localhost
 ```
 
-Create a Bastion Server in the Security Compartment and target the VCN and Subnet containing the EBSCM Application Server. In the example below we are connecting to the Production enviroment internal application server.
+Create a Bastion Server in the Security Compartment and target the VCN and Subnet containing the EBSCM Application Server. In the example below we are connecting to the Production environment internal application server.
 
 <img src="../content/BastionEBS_server.png" width="600" height="value">
 
@@ -145,8 +149,14 @@ Create the Bastion Session with the EBS Internal Apps server as the target using
 
 You can then connect to the server using the following command in a terminal window:
 ```
-sudo ssh -i <private_Key> -N -L 443:<ip_ebs_lb>:443 -p 22 ocid1.bastionsession.oc1.eu-frankfurt-1.amaaaaaaqwelykqavztbpolggiqsxuolgqqufxqhvujygvieii45ezn352oa@host.bastion.eu-frankfurt-1.oci.oraclecloud.com
+sudo ssh -i <private_Key> -N -L 443:<ip_ebs_lb>:443 -p 22 <bastion_session_ocid>
 ```
+
+| Parameter | Description |
+| --- | --- |
+| <private_Key> | Path to your private key for EBSCM, eg: .ssh/ssh-key-ebscm.key |
+| <ip_ebscm_lb> | The IP address of the EBSCM Load Balancer |
+| <bastion_session_ocid> | The OCID of the Bastion session |
 
 Finally, point your browser to: https://prodapp.ebs
 
