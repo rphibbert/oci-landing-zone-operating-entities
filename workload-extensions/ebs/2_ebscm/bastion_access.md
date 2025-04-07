@@ -91,7 +91,7 @@ We can do this the Bastion Server created above.
 
 Create the Bastion Session with the EBSCM Load Balancer server as the target using port 443:
 
-<img src="../content/BastionEBSCM_UI.png" width="1000" height="value">
+<img src="../content/BastionEBSCM_UI.png" width="600" height="value">
 
 In the above example 10.0.8.185 is the EBS Load Balancer
 
@@ -130,7 +130,7 @@ Add your EBS domain entry to your hosts file, eg:
 
 Create a Bastion Server in the Security Compartment and target the VCN and Subnet containing the EBSCM Application Server. In the example below we are connecting to the Production enviroment internal application server.
 
-<img src="../content/BastionEBS_server.png" width="1000" height="value">
+<img src="../content/BastionEBS_server.png" width="600" height="value">
 
 | Resource | Name |
 | --- | --- |
@@ -140,7 +140,7 @@ Create a Bastion Server in the Security Compartment and target the VCN and Subne
 
 Create the Bastion Session with the EBS Internal Apps server as the target using port 443:
 
-<img src="../content/BastionEBSCM_SSH.png" width="1000" height="value">
+<img src="../content/BastionEBSCM_SSH.png" width="600" height="value">
 
 You can then connect to the server using the following command in a terminal window:
 ```
