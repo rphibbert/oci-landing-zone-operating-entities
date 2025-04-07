@@ -114,7 +114,7 @@ https://example.com/
 
 ## **3. EBS Environment Access**
 
-In this example we are using https and port 443 connecting to the domain https://prodapp.ebs wuth an IP of 10.0.73.89
+In this example we are using https and port 443 connecting to the domain https://prodapp.ebs with an IP of 10.0.73.89
 
 Add your EBS domain entry to your hosts file, eg:
 ```
