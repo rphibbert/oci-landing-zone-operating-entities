@@ -20,7 +20,7 @@ Create the Bastion Server in the Security Compartment and target the VCN and Sub
 
 Create the Bastion Session with the EBSCM Apps server as the target using port 22:
 
-<img src="../content/BastionEBSCM_SSH.png" width="1000" height="value">
+<img src="../content/BastionEBSCM_SSH.png" width="600" height="value">
 
 You can then connect to the server using the following command in a terminal window:
 
