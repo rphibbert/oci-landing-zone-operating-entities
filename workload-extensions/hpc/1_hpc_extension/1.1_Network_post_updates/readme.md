@@ -56,11 +56,22 @@ This is the diagram that shows the Network after adding the post STEP1 configura
 
 For this HPC LZ EXT we provided a [customized Json file](../oci_hpc_lz_ext_network_post.auto.tfvars.json).
 
+To get the Prod VCN Private View OCID:
+Main menu -> Network -> DNS Management -> Private Views (Select Compartment cmp-lzp-p-network) -> Name: vcn-fra-lzp-p-hpc -> Copy OCID
+
+To get the PreProd VCN Private View OCID:
+Main menu -> Network -> DNS Management -> Private Views (Select Compartment cmp-lzp-pp-network) -> Name: vcn-fra-lzp-pp-hpc -> Copy OCID
+
+
 - Replace the "**Update with DRG OCID**" with the OCID of the DRG
+- Replace the "**Prod VCN Private View OCID**" with the OCID of the Prod VCN Private View
+- Replace the "**PreProd VCN Private View OCID**" with the OCID of the PreProd VCN Private View
+- Replace the "**Compartment cmp-lzp-p-network OCID**" with the OCID of the Prod Network Compartment
+- Replace the "**Compartment cmp-lzp-pp-network OCID**" with the OCID of the PreProd Network Compartment
 
 **7.**
 
-Update file **oci_hpc_lz_ext_network_post.auto.tfvars** adding your DRG OCID and edit the ORM stack (STEP2) replacing the original Network JSON configuration with the updated file.
+Update the file **oci_hpc_lz_ext_network_post.auto.tfvars** adding the above OCID and edit the ORM stack (STEP2) replacing the original Network JSON configuration with the updated file.
 
 Run Plan & Apply to populate the new changes.
 
