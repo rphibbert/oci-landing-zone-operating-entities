@@ -7,7 +7,7 @@
 | -------------------- | ----------------------------------------------------- |
 | **NAME**         | HPC Cluster set-up                                    |
 | **OBJECTIVE**        | Provision OCI HPC cluster as a new platform on the HPC Landing Zone Extensions. |
-| **TARGET RESOURCES** | HPC Cluster                                                  |
+| **TARGET RESOURCES** | HPC Clusters                                                 |
 
 &nbsp; 
 
@@ -24,7 +24,7 @@ The following are the relevant configuration variables for deploying the Product
 | Resource | Name |
 | --- | --- |
 | Target Compartment | cmp-lzp-p-platform-hpc |
-| Use Existing VCB | Check |
+| Use Existing VCN | Check |
 | VCN Compartment | cmp-lzp-p-network |
 | Existing Network | vcn-fra-lzp-p-hpc |
 | Deploy Master Node without a public IP | Check |
@@ -38,7 +38,7 @@ The following are the relevant configuration variables for deploying the Pre-Pro
 | Resource | Name |
 | --- | --- |
 | Target Compartment | cmp-lzp-pp-platform-hpc |
-| Use Existing VCB | Check |
+| Use Existing VCN | Check |
 | VCN Compartment | cmp-lzp-pp-network |
 | Existing Network | vcn-fra-lzp-pp-hpc |
 | Deploy Master Node without a public IP | Check |
