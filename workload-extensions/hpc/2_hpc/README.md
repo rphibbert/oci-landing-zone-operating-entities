@@ -24,6 +24,7 @@ The following are the relevant configuration variables for deploying the Product
 | Resource | Name |
 | --- | --- |
 | Target Compartment | cmp-lzp-p-platform-hpc |
+| FSS Compartment | cmp-lzp-p-platform-hpc |
 | Use Existing VCN | Check |
 | VCN Compartment | cmp-lzp-p-network |
 | Existing Network | vcn-fra-lzp-p-hpc |
@@ -38,6 +39,7 @@ The following are the relevant configuration variables for deploying the Pre-Pro
 | Resource | Name |
 | --- | --- |
 | Target Compartment | cmp-lzp-pp-platform-hpc |
+| FSS Compartment | cmp-lzp-pp-platform-hpc |
 | Use Existing VCN | Check |
 | VCN Compartment | cmp-lzp-pp-network |
 | Existing Network | vcn-fra-lzp-pp-hpc |
