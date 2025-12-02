@@ -1,5 +1,28 @@
 # RESOURCE NAMING CONVENTIONS
 
+## **Table of Contents** <!-- omit from toc -->
+
+- [**1. Introduction**](#1-introduction)
+- [**2. Genral**](#2-general-naming-convention)
+- [**3. IAM Resources**](#3-iam-resources)
+  - [**3.1 Compartments**](#31-compartments)
+  - [**3.2 Groups**](#32-groups)
+  - [**3.3 Policies**](#33-policies)
+- [**4. Network Resources**](#4-network-resources)
+  - [**4.1 VCNs**](#41-vcns)
+  - [**4.2 Subnets**](#42-subnets)
+  - [**4.3 Route Tables**](#43-route-tables)
+  - [**4.4 Security Lists**](#44-security-lists)
+  - [**4.5 Network Security Groups**](#45-network-security-groups)
+  - [**4.6 Internet Gateways**](#36-internet-gateways)
+  - [**4.7 NAT Gateways**](#36-nat-gateways)
+  - [**4.8 Service Gateways**](#36-service-gateways)
+  - [**4.9 Dynamic Routing Gateways**](#36-dynamic-routing-gateways)
+  - [**4.10 DRG Attachments**](#36-drg-attachments)
+  - [**4.11 DRG Route Distributions**](#36-drg-route-distributions)
+  - [**4.12 DRG Route Tables**](#36-drg-route-tables)
+  [**5. List of Resource Types**](#5-list-of-resource-types)
+
 &nbsp; 
 
 ## 1. Introduction
@@ -13,12 +36,11 @@ A resource naming convention helps to identify resources, their type, and locati
 
 &nbsp; 
 
-## 2. General
+## 2. General Naming Convention
 
 One-OE Example:\
 &lt;resource_type&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;workload&gt;
 
-### 2.1 resource_type
 
 &lt;resource_type&gt;
 | Name | Description |
@@ -194,7 +216,7 @@ nsg-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;workload&gt;-&lt
 | nsg-fra-lz-prod-proj1-web | NSG-FRA-LZ-PROD-PROJ1-WEB-KEY | Production Shared VCN, "Proj1" Web Network Security Group |
 | nsg-fra-lz-preprod-proj1-web | NSG-FRA-LZ-PREPROD-PROJ1-WEB-KEY | Pre-Production Shared VCN, "Proj1" Web Network Security Group |
 
-### 4.6 Internet Gateway
+### 4.6 Internet Gateways
 
 #### Naming Convention
 igw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
@@ -204,7 +226,7 @@ igw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 |---|---|---|
 | igw-fra-lz-hub | IGW-FRA-LZ-HUB-KEY | Hub VCN Internet Gateway |
 
-### 4.7 NAT Gateway
+### 4.7 NAT Gateways
 
 #### Naming Convention
 ngw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
@@ -214,7 +236,7 @@ ngw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 |---|---|---|
 | ngw-fra-lz-hub | NGW-FRA-LZ-HUB-KEY | Hub VCN NAT Gateway |
 
-### 4.8 Service Gateway
+### 4.8 Service Gateways
 
 #### Naming Convention
 sgw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
@@ -226,7 +248,7 @@ sgw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt
 | sgw-fra-lz-prod-projects | SGW-FRA-LZ-PROD-PROJECTS-KEY | Production VCN Service Gateway |
 | sgw-fra-lz-preprod-projects | SGW-FRA-LZ-PREPROD-PROJECTS-KEY | Pre-Production VCN Service Gateway |
 
-### 4.9 Dynamic Routing Gateway
+### 4.9 Dynamic Routing Gateways
 
 #### Naming Convention
 drg-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
@@ -271,7 +293,7 @@ drgrt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 
 &nbsp;
 
-## 2. List of Resource Types
+## 5. List of Resource Types
 
 
 | RESOURCE TYPE  |  ABREVIATION | 
