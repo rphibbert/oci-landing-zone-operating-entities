@@ -14,13 +14,13 @@
   - [**4.3 Route Tables**](#43-route-tables)
   - [**4.4 Security Lists**](#44-security-lists)
   - [**4.5 Network Security Groups**](#45-network-security-groups)
-  - [**4.6 Internet Gateways**](#36-internet-gateways)
-  - [**4.7 NAT Gateways**](#36-nat-gateways)
-  - [**4.8 Service Gateways**](#36-service-gateways)
-  - [**4.9 Dynamic Routing Gateways**](#36-dynamic-routing-gateways)
-  - [**4.10 DRG Attachments**](#36-drg-attachments)
-  - [**4.11 DRG Route Distributions**](#36-drg-route-distributions)
-  - [**4.12 DRG Route Tables**](#36-drg-route-tables)
+  - [**4.6 Internet Gateways**](#46-internet-gateways)
+  - [**4.7 NAT Gateways**](#47-nat-gateways)
+  - [**4.8 Service Gateways**](#48-service-gateways)
+  - [**4.9 Dynamic Routing Gateways**](#49-dynamic-routing-gateways)
+  - [**4.10 DRG Attachments**](#410-drg-attachments)
+  - [**4.11 DRG Route Distributions**](#411-drg-route-distributions)
+  - [**4.12 DRG Route Tables**](#412-drg-route-tables)
   [**5. List of Resource Types**](#5-list-of-resource-types)
 
 &nbsp; 
@@ -245,8 +245,8 @@ sgw-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt
 | Name | Object Name | Description |
 |---|---|---|
 | sgw-fra-lz-hub | SGW-FRA-LZ-HUB-KEY | Hub VCN Service Gateway |
-| sgw-fra-lz-prod-projects | SGW-FRA-LZ-PROD-PROJECTS-KEY | Production VCN Service Gateway |
-| sgw-fra-lz-preprod-projects | SGW-FRA-LZ-PREPROD-PROJECTS-KEY | Pre-Production VCN Service Gateway |
+| sgw-fra-lz-prod-proj | SGW-FRA-LZ-PROD-PROJ-KEY | Production VCN Service Gateway |
+| sgw-fra-lz-preprod-proj | SGW-FRA-LZ-PREPROD-PROJ-KEY | Pre-Production VCN Service Gateway |
 
 ### 4.9 Dynamic Routing Gateways
 
