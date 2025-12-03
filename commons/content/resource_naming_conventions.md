@@ -21,7 +21,7 @@
   - [**4.10 DRG Attachments**](#410-drg-attachments)
   - [**4.11 DRG Route Distributions**](#411-drg-route-distributions)
   - [**4.12 DRG Route Tables**](#412-drg-route-tables)
-  [**5. List of Resource Types**](#5-list-of-resource-types)
+- [**5. List of Resource Types**](#5-list-of-resource-types)
 
 &nbsp; 
 
