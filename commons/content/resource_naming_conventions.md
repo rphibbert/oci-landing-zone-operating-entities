@@ -22,6 +22,7 @@
   - [**4.11 DRG Route Distributions**](#411-drg-route-distributions)
   - [**4.12 DRG Route Tables**](#412-drg-route-tables)
 - [**5. List of Resource Types**](#5-list-of-resource-types)
+  - [**5.1 Cloud Guard Targetss**](#51-cloud-guard-targets)
 
 &nbsp; 
 
@@ -189,8 +190,8 @@ rt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 | Name | Object Name | Description |
 |---|---|---|
 | rt-fra-lz-hub-ingress | RT-FRA-LZ-HUB-INGRESS-KEY | Hub VCN Ingress Routing |
-| rt-fra-lz-prod-prj-gen | RT-FRA-LZ-PROD-PRJ-GEN-KEY | Production Shared VCN, Subnets Generic Routing |
-| rt-fra-lz-preprod-prj-gen | RT-FRA-LZ-PREPROD-PRJ-GEN-KEY | Pre-Production Shared VCN, Subnets Generic Routing |
+| rt-fra-lz-prod-proj-generic | RT-FRA-LZ-PROD-PROJ-GENERIC-KEY | Production Shared VCN, Subnets Generic Routing |
+| rt-fra-lz-preprod-proj-generic | RT-FRA-LZ-PREPROD-PROJ-GENERIC-KEY | Pre-Production Shared VCN, Subnets Generic Routing |
 
 ### 4.4 Security Lists
 
@@ -201,8 +202,8 @@ sl-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 | Name | Object Name | Description |
 |---|---|---|
 | sl-fra-lz-hub-fw-dmz | SL-FRA-LZ-HUB-FW-DMZ-KEY | Hub External Firewall Subnet Security List |
-| sl-fra-lz-prod-prj-gen | SL-FRA-LZ-PROD-PRJ-GEN-KEY | Production Shared VCN, Subnets Generic Security List |
-| sl-fra-lz-preprod-prj-gen | SL-FRA-LZ-PREPROD-PRJ-GEN-KEY | Pre-Production Shared VCN, Subnets Generic Security List |
+| sl-fra-lz-prod-proj-gen | SL-FRA-LZ-PROD-PROJ-GEN-KEY | Production Shared VCN, Subnets Generic Security List |
+| sl-fra-lz-preprod-proj-gen | SL-FRA-LZ-PREPROD-PROJ-GEN-KEY | Pre-Production Shared VCN, Subnets Generic Security List |
 
 ### 4.5 Network Security Groups
 
@@ -267,8 +268,8 @@ drgatt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 | Name | Object Name | Description |
 |---|---|---|
 | drgatt-fra-lz-hub | DRGATT-FRA-LZ-HUB-KEY | Hub VCN DRG Attachment |
-| drgatt-fra-lz-prod-projects | DRGATT-FRA-LZ-PROD-PROJECTS-KEY | Production VCN DRG Attachment |
-| drgatt-fra-lz-preprod-projects | DRGATT-FRA-LZ-PREPROD-PROJECTS-KEY | Production VCN DRG Attachment |
+| drgatt-fra-lz-prod-proj | DRGATT-FRA-LZ-PROD-PROJ-KEY | Production VCN DRG Attachment |
+| drgatt-fra-lz-preprod-proj | DRGATT-FRA-LZ-PREPROD-PROJ-KEY | Production VCN DRG Attachment |
 
 ### 4.11 DRG Route Distributions
 
@@ -293,8 +294,41 @@ drgrt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 
 &nbsp;
 
-## 5. List of Resource Types
+## 5. Security Resources
 
+### 5.1 Cloud Guard Targets
+
+#### Naming Convention
+cg-tgt-&lt;target&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| cg-tgt-root | CG-TGT-ROOT-KEY | Root compartment target | 
+
+### 5.2 Vulnerability Scanning Services Recipes - Host
+
+#### Naming Convention
+vss-rh-&lt;target&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| vss-rh-lz | VSS-RH-LZ-KEY | LZ enclosing compartment target | 
+
+### 5.2 Cloud Guard Targets
+
+#### Naming Convention
+cg-tgt-&lt;target&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| cg-tgt-root | CG-TGT-ROOT-KEY | Root compartment target | 
+
+&nbsp;
+
+## 6. List of Resource Types
 
 | RESOURCE TYPE  |  ABREVIATION | 
 |---|---|
@@ -332,6 +366,8 @@ drgrt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 | Dynamic Group | dgp |
 | Dynamic Routing Gateway | drg |
 | Dynamic Routing Gateway Attachment | drgatt |
+| Dynamic Routing Gateway Route Distribution | drgrd |
+| Dynamic Routing Gateway Route Tables | drgrt |
 | Event Rule | rul |
 | ExaCS Infrastructure | ecsi |
 | ExaCS VMCluster Cloud | ecsvmc |
@@ -374,8 +410,8 @@ drgrt-&lt;region&gt;-&lt;landing_zone&gt;-&lt;environment&gt;
 | Vault | vlt |
 | Virtual Cloud Network | vcn |
 | Virtual Machine | vm |
-| Vulnerability Scanning Recipe - Container | vss-recc |
-| Vulnerability Scanning Recipe - Host | vss-rech |
+| Vulnerability Scanning Recipe - Container | vss-rc |
+| Vulnerability Scanning Recipe - Host | vss-rh |
 | Vulnerability Scanning Target | vss-tgt |
 
 &nbsp; 
