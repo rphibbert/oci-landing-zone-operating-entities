@@ -21,7 +21,7 @@
   - [**4.10 DRG Attachments**](#410-drg-attachments)
   - [**4.11 DRG Route Distributions**](#411-drg-route-distributions)
   - [**4.12 DRG Route Tables**](#412-drg-route-tables)
-- [**5. List of Resource Types**](#5-list-of-resource-types)
+- [**5. Security Resources**](#5-security-resources)
   - [**5.1 Cloud Guard Targets**](#51-cloud-guard-targets)
   - [**5.2 Vulnerability Scanning Services Recipes - Host**](#52-vulnerability-scanning-services-recipes---host)
   - [**5.3 Vulnerability Scanning Services Recipes - Container**](#53-vulnerability-scanning-services-recipes---container)
@@ -31,6 +31,8 @@
   - [**5.7 Security Zone Targets**](#57-security-zone-targets)
   - [**5.8 Vaults**](#58-vaults)
   - [**5.9 Vault Keys**](#59-vault-keys)
+- [**6. List of Resource Types**](#6-list-of-resource-types)
+
 &nbsp; 
 
 ## 1. Introduction
