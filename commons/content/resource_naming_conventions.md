@@ -22,8 +22,15 @@
   - [**4.11 DRG Route Distributions**](#411-drg-route-distributions)
   - [**4.12 DRG Route Tables**](#412-drg-route-tables)
 - [**5. List of Resource Types**](#5-list-of-resource-types)
-  - [**5.1 Cloud Guard Targetss**](#51-cloud-guard-targets)
-
+  - [**5.1 Cloud Guard Targets**](#51-cloud-guard-targets)
+  - [**5.2 Vulnerability Scanning Services Recipes - Host**](#52-vulnerability-scanning-services-recipes---host)
+  - [**5.3 Vulnerability Scanning Services Recipes - Container**](#53-vulnerability-scanning-services-recipes---container)
+  - [**5.4 Vulnerability Scanning Target - Host**](#54-vulnerability-scanning-target---host)
+  - [**5.5 Vulnerability Scanning Targets - Container**](#55-vulnerability-scanning-targets---container)
+  - [**5.6 Security Zone Recipes**](#56-security-zone-recipes)
+  - [**5.7 Security Zone Targets**](#57-security-zone-targets)
+  - [**5.8 Vaults**](#58-vaults)
+  - [**5.9 Vault Keys**](#59-vault-keys)
 &nbsp; 
 
 ## 1. Introduction
@@ -309,22 +316,87 @@ cg-tgt-&lt;target&gt;
 ### 5.2 Vulnerability Scanning Services Recipes - Host
 
 #### Naming Convention
-vss-rh-&lt;target&gt;
+vss-rcph-&lt;landing_zone&gt;
 
 #### Examples
 | Name | Object Name | Description |
 |---|---|---|
-| vss-rh-lz | VSS-RH-LZ-KEY | LZ enclosing compartment target | 
+| vss-rcph-lz | VSS-RCPH-LZ-KEY | Compute scan for LZ | 
 
-### 5.2 Cloud Guard Targets
+### 5.3 Vulnerability Scanning Services Recipes - Container
 
 #### Naming Convention
-cg-tgt-&lt;target&gt;
+vss-rcpc-&lt;landing_zone&gt;
 
 #### Examples
 | Name | Object Name | Description |
 |---|---|---|
-| cg-tgt-root | CG-TGT-ROOT-KEY | Root compartment target | 
+| vss-rcpc-lz | VSS-RCPC-LZ-KEY | Container scan for LZ | 
+
+### 5.4 Vulnerability Scanning Target - Host
+
+#### Naming Convention
+vss-tgth-&lt;landing_zone&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| vss-tgth-lz | VSS-TGTH-LZ-KEY | Compute scan, LZ enclosing compartment target | 
+
+### 5.5 Vulnerability Scanning Targets - Container
+
+#### Naming Convention
+vss-tgtc-&lt;landing_zone&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| vss-tgtc-lz | VSS-TGTC-LZ-KEY | Container scan, LZ enclosing compartment target | 
+
+### 5.6 Security Zone Recipes
+
+#### Naming Convention
+sz-rcp-&lt;landing_zone&gt;-&lt;zone_number&gt;-&lt;zone_name&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| sz-rcp-lz-01-cis-l1 | SZ-RCP-LZ-01-CIS-L1-KEY | CIS Level 1 standard Security Recipe | 
+| sz-rcp-lz-02-cis-l2 | SZ-RCP-LZ-02-CIS-L2-KEY | CIS Level 2 standard Security Recipe | 
+| sz-rcp-lz-03-shared-network | SZ-RCP-LZ-03-SHARED-NETWORK-KEY | Shared Netowrk Security Recipe | 
+| sz-rcp-lz-04-environment-network | SZ-RCP-LZ-04-ENVIRONMENT-NETWORK-KEY | Environment Network Security Recipe | 
+| sz-rcp-lz-05-workloads | SZ-RCP-LZ-05-WORKLOADS | Workloads Security Recipe | 
+
+### 5.7 Security Zone Targets
+
+#### Naming Convention
+sz-tgt-&lt;landing_zone&gt;-&lt;zone_number&gt;-&lt;zone_name&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| sz-tgt-lz-01-cis-l1 | SZ-TGT-LZ-01-CIS-L1-KEY | CIS Level 1 standard Security Target | 
+| sz-tgt-lz-02-cis-l2 | SZ-TGT-LZ-02-CIS-L2-KEY | CIS Level 2 standard Security Target | 
+
+### 5.8 Vaults
+
+#### Naming Convention
+vlt-&lt;landing_zone&gt;-&lt;security_compartment&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| vlt-lz-shared-security | VLT-LZ-SHARED-SECURITY-KEY | Vault for Shared Security | 
+
+### 5.9 Vault Keys
+
+#### Naming Convention
+vlt-key-&lt;landing_zone&gt;-&lt;security_compartment&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| vlt-key-lz-shared-security | VLT-KEY-LZ-SHARED-SECURITY-KEY | Vault Key for Shared Security | 
 
 &nbsp;
 
@@ -408,11 +480,13 @@ cg-tgt-&lt;target&gt;
 | Subnet | sn |
 | Tenancy | tcy |
 | Vault | vlt |
+| Vault Key | vlt-key |
 | Virtual Cloud Network | vcn |
 | Virtual Machine | vm |
-| Vulnerability Scanning Recipe - Container | vss-rc |
-| Vulnerability Scanning Recipe - Host | vss-rh |
-| Vulnerability Scanning Target | vss-tgt |
+| Vulnerability Scanning Recipe - Container | vss-rcpc |
+| Vulnerability Scanning Recipe - Host | vss-rcph |
+| Vulnerability Scanning Target - Container | vss-tgtc |
+| Vulnerability Scanning Target - Host | vss-tgth |
 
 &nbsp; 
 
