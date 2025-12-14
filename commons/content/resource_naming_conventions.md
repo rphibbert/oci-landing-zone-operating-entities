@@ -365,20 +365,23 @@ sz-rcp-&lt;landing_zone&gt;-&lt;zone_number&gt;-&lt;zone_name&gt;
 |---|---|---|
 | sz-rcp-lz-01-cis-l1 | SZ-RCP-LZ-01-CIS-L1-KEY | CIS Level 1 standard Security Recipe | 
 | sz-rcp-lz-02-cis-l2 | SZ-RCP-LZ-02-CIS-L2-KEY | CIS Level 2 standard Security Recipe | 
-| sz-rcp-lz-03-shared-network | SZ-RCP-LZ-03-SHARED-NETWORK-KEY | Shared Netowrk Security Recipe | 
+| sz-rcp-lz-03-shared-network | SZ-RCP-LZ-03-SHARED-NETWORK-KEY | Shared Network Security Recipe | 
 | sz-rcp-lz-04-environment-network | SZ-RCP-LZ-04-ENVIRONMENT-NETWORK-KEY | Environment Network Security Recipe | 
-| sz-rcp-lz-05-workloads | SZ-RCP-LZ-05-WORKLOADS | Workloads Security Recipe | 
+| sz-rcp-lz-05-workload | SZ-RCP-LZ-05-WORKLOAD | Workload Security Recipe | 
 
 ### 5.7 Security Zone Targets
 
 #### Naming Convention
-sz-tgt-&lt;landing_zone&gt;-&lt;zone_number&gt;-&lt;zone_name&gt;
+sz-tgt-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;zone_name&gt;
 
 #### Examples
 | Name | Object Name | Description |
 |---|---|---|
-| sz-tgt-lz-01-cis-l1 | SZ-TGT-LZ-01-CIS-L1-KEY | CIS Level 1 standard Security Target | 
-| sz-tgt-lz-02-cis-l2 | SZ-TGT-LZ-02-CIS-L2-KEY | CIS Level 2 standard Security Target | 
+| sz-tgt-lz-cis-l1 | SZ-TGT-LZ-CIS-L1-KEY | CIS Level 1 standard Security Target | 
+| sz-tgt-lz-cis-l2 | SZ-TGT-LZ-CIS-L2-KEY | CIS Level 2 standard Security Target | 
+| sz-tgt-lz-shared-network | SZ-TGT-LZ-SHARED-NETWORK-KEY | Shared Network Security Target | 
+| sz-tgt-lz-prod-environment-network | SZ-TGT-LZ-PROD-ENVIRONMENT-NETWORK-KEY | Production Environment Network Security Target | 
+| sz-tgt-lz-prod-proj1 | SZ-TGT-LZ-PROD-PROJ1-KEY | Production Workload Security Target | 
 
 ### 5.8 Vaults
 
