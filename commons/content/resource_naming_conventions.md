@@ -421,7 +421,7 @@ vlt-key-&lt;landing_zone&gt;-&lt;security_compartment&gt;
 ### 6.1 Alarms
 
 #### Naming Convention
-al-&lt;;landing_zone&gt;-&lt;resource_type&gt;-&lt;resource&gt;
+al-&lt;landing_zone&gt;-&lt;resource_type&gt;-&lt;resource&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -431,7 +431,7 @@ al-&lt;;landing_zone&gt;-&lt;resource_type&gt;-&lt;resource&gt;
 ### 6.2 Event Rules
 
 #### Naming Convention
-rul-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;action_type&gt;-&lt;resource&gt;
+rul-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;action_type&gt;-&lt;resource&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -446,7 +446,7 @@ rul-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;action_type&gt;-&lt;resource&g
 ### 6.3 Notification Topics
 
 #### Naming Convention
-nott-&lt;;landing_zone&gt;-&lt;resource&gt;
+nott-&lt;landing_zone&gt;-&lt;resource&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -459,7 +459,7 @@ nott-&lt;;landing_zone&gt;-&lt;resource&gt;
 ### 6.4 Service Connector Hub
 
 #### Naming Convention
-sch-&lt;;landing_zone&gt;-&lt;resource&gt;
+sch-&lt;landing_zone&gt;-&lt;resource&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -469,7 +469,7 @@ sch-&lt;;landing_zone&gt;-&lt;resource&gt;
 ### 6.5 Buckets
 
 #### Naming Convention
-bkt-&lt;;landing_zone&gt;-&lt;resource&gt;
+bkt-&lt;landing_zone&gt;-&lt;resource&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -479,7 +479,7 @@ bkt-&lt;;landing_zone&gt;-&lt;resource&gt;
 ### 6.6 Log Groups
 
 #### Naming Convention
-lgrp-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
+lgrp-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -491,7 +491,7 @@ lgrp-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 ### 6.7 Flow Logs
 
 #### Naming Convention
-log-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
+log-&lt;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 
 #### Examples
 | Object Name | Description |
@@ -510,7 +510,7 @@ log-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
 ### 7.1 Tag Namespaces
 
 #### Naming Convention
-tagns-&lt;;landing_zone&gt;-&lt;tag_type&gt;
+tagns-&lt;landing_zone&gt;-&lt;tag_type&gt;
 
 #### Examples
 | Name | Object Name | Description |
@@ -520,7 +520,7 @@ tagns-&lt;;landing_zone&gt;-&lt;tag_type&gt;
 ### 7.2 Tags
 
 #### Naming Convention
-tag-&lt;;landing_zone&gt;-&lt;tag_type&gt;
+tag-&lt;landing_zone&gt;-&lt;tag_type&gt;
 
 #### Examples
 | Name | Object Name | Description |
