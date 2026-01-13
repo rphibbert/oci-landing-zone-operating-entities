@@ -25,13 +25,24 @@
   - [**5.1 Cloud Guard Targets**](#51-cloud-guard-targets)
   - [**5.2 Vulnerability Scanning Services Recipes - Host**](#52-vulnerability-scanning-services-recipes---host)
   - [**5.3 Vulnerability Scanning Services Recipes - Container**](#53-vulnerability-scanning-services-recipes---container)
-  - [**5.4 Vulnerability Scanning Target - Host**](#54-vulnerability-scanning-target---host)
+  - [**5.4 Vulnerability Scanning Targets - Host**](#54-vulnerability-scanning-target---host)
   - [**5.5 Vulnerability Scanning Targets - Container**](#55-vulnerability-scanning-targets---container)
   - [**5.6 Security Zone Recipes**](#56-security-zone-recipes)
   - [**5.7 Security Zone Targets**](#57-security-zone-targets)
   - [**5.8 Vaults**](#58-vaults)
   - [**5.9 Vault Keys**](#59-vault-keys)
-- [**6. List of Resource Types**](#6-list-of-resource-types)
+- [**6. Observability Resources**](#6-observability-resources)
+  - [**6.1 Alarms**](#61-alarms)
+  - [**6.2 Event Rules**](#62-event-rules)
+  - [**6.3 Notification Topics**](#63-notification-topics)
+  - [**6.4 Service Connector Hub**](#64-service-connector-hub)
+  - [**6.5 Buckets**](#65-buckets)
+  - [**6.6 Log Groups**](#66-log-groups)
+  - [**6.7 Flow Logs**](#67-flow-logs)
+- [**7. Governance Resources**](#7-governance-resources)
+  - [**7.1 Tag Namespaces**](#71-tag-namespaces)
+  - [**7.2 Tags**](#72-tags)
+- [**8. List of Resource Types**](#8-list-of-resource-types)
 
 &nbsp; 
 
@@ -335,7 +346,7 @@ vss-rcpc-&lt;landing_zone&gt;
 |---|---|---|
 | vss-rcpc-lz | VSS-RCPC-LZ-KEY | Container scan for LZ | 
 
-### 5.4 Vulnerability Scanning Target - Host
+### 5.4 Vulnerability Scanning Targets - Host
 
 #### Naming Convention
 vss-tgth-&lt;landing_zone&gt;
@@ -405,7 +416,120 @@ vlt-key-&lt;landing_zone&gt;-&lt;security_compartment&gt;
 
 &nbsp;
 
-## 6. List of Resource Types
+## 6. Observability Resources
+
+### 6.1 Alarms
+
+#### Naming Convention
+al-&lt;;landing_zone&gt;-&lt;resource_type&gt;-&lt;resource&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| al-lz-network-lb | AL-LZ-NETWORK-LB-KEY | Hub Network load balancer alarm | 
+
+### 6.2 Event Rules
+
+#### Naming Convention
+rul-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;action_type&gt;-&lt;resource&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| rul-lz-notify-network | RUL-LZ-NOTIFY-NETWORK-KEY | Hub Network changes notification rule | 
+| rul-lz-notify-security | RUL-LZ-NOTIFY-SECURITY-KEY | Shared Security changes notification rule | 
+| rul-lz-preprod-notify-network | RUL-LZ-PREPROD-NOTIFY-NETWORK-KEY | Pre-Production Network changes notification rule | 
+| rul-lz-preprod-notify-security | RUL-LZ-PREPROD-NOTIFY-SECURITY-KEY | Pre-Production Security changes notification rule | 
+| rul-lz-prod-notify-network | RUL-LZ-PROD-NOTIFY-NETWORK-KEY | Production Network changes notification rule | 
+| rul-lz-prod-notify-security | RUL-LZ-PROD-NOTIFY-SECURITY-KEY | Production Security changes notification rule | 
+
+### 6.3 Notification Topics
+
+#### Naming Convention
+nott-&lt;;landing_zone&gt;-&lt;resource&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| nott-lz-cloudguard | NOTT-LZ-CLOUDGUARD-KEY | Cloud Guard notification topic | 
+| nott-lz-iam | NOTT-LZ-IAM-KEY | IAM notification topic | 
+| nott-lz-network | NOTT-LZ-NETWORK-KEY | Hub Network notification topic | 
+| nott-lz-security | NOTT-LZ-SECURITY-KEY | Shared Security notification topic | 
+
+### 6.4 Service Connector Hub
+
+#### Naming Convention
+sch-&lt;;landing_zone&gt;-&lt;resource&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| sch-lz-monitor | SCH-LZ-MONITOR | Service Connector for Landing Zone monitoring | 
+
+### 6.5 Buckets
+
+#### Naming Convention
+bkt-&lt;;landing_zone&gt;-&lt;resource&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| bkt-lz-service-connector | BKT-LZ-SERVICE-CONNECTOR | Bucket for Service Connector logging | 
+
+### 6.6 Log Groups
+
+#### Naming Convention
+lgrp-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| lgrp-lz-preprod-vcn-flow | LGRP-LZ-PREPROD-VCN-FLOW-KEY | Log Group for Pre-Production network | 
+| lgrp-lz-prod-vcn-flow | LGRP-LZ-PROD-VCN-FLOW-KEY | Log Group for Production network | 
+| lgrp-lz-vcn-flow | LGRP-LZ-VCN-FLOW-KEY | Log Group for Hub network | 
+
+### 6.7 Flow Logs
+
+#### Naming Convention
+log-&lt;;landing_zone&gt;-&lt;environment&gt;-&lt;resource_type&gt;
+
+#### Examples
+| Object Name | Description |
+|---|---|
+| LOG-LZ-PREPROD-SUBNET-FLOW-KEY | Flow log Pre-Production Subnets | 
+| LOG-LZ-PREPROD-VCN-FLOW-KEY | Flow log Pre-Production VCNs | 
+| LOG-LZ-PROD-SUBNET-FLOW-KEY | Flow log Production Subnets | 
+| LOG-LZ-PROD-VCN-FLOW-KEY | Flow log Production VCNs | 
+| LOG-LZ-SUBNET-FLOW-KEY | Flow log Hub Subnets | 
+| LOG-LZ-VCN-FLOW-KEY | Flow log Hub VCNs | 
+
+&nbsp;
+
+## 7. Governance Resources
+
+### 7.1 Tag Namespaces
+
+#### Naming Convention
+tagns-&lt;;landing_zone&gt;-&lt;tag_type&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| tagns-lz-role | TAGNS-LZ-ROLE-KEY | Tag namespace for Tag Based Access Controls of Landing Zone Roles | 
+
+### 7.2 Tags
+
+#### Naming Convention
+tag-&lt;;landing_zone&gt;-&lt;tag_type&gt;
+
+#### Examples
+| Name | Object Name | Description |
+|---|---|---|
+| tag-lz-role | TAG-LZ-ROLE-KEY | Tag for Tag Based Access Controls of Landing Zone Roles | 
+
+&nbsp;
+
+## 8. List of Resource Types
 
 | RESOURCE TYPE  |  ABREVIATION | 
 |---|---|
@@ -483,6 +607,8 @@ vlt-key-&lt;landing_zone&gt;-&lt;security_compartment&gt;
 | Service Connector Hub | sch |
 | Stream | str |
 | Subnet | sn |
+| Tag | tag |
+| Tag Namespace | tagns |
 | Tenancy | tcy |
 | Vault | vlt |
 | Vault Key | vlt-key |
@@ -497,7 +623,7 @@ vlt-key-&lt;landing_zone&gt;-&lt;security_compartment&gt;
 
 # License
 
-Copyright (c) 2025 Oracle and/or its affiliates.
+Copyright (c) 2026 Oracle and/or its affiliates.
 
 Licensed under the Universal Permissive License (UPL), Version 1.0.
 
