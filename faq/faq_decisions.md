@@ -3,7 +3,7 @@
 ## Technical Questions
 ## **Contents** <!-- omit from toc -->
 
-- [**1. Security (includes IAM**](#1-security-includes-iam)
+- [**1. Security (includes IAM)**](#1-security-includes-iam)
 - [**2. Network**](#2-network)
 - [**3. Operations (includes observability)**](#3-operations-includes-observability)
 
@@ -36,7 +36,6 @@ Common compartments host shared services, managed centrally, which will be used 
 - Security: Cloud Guard, Vaults & Keys, Security Zones
 - Platforms: OKE, OCVS, ExaCS
 
-&nbsp;
 Environment compartments host resources within the specified environment, enabling clear separation, tight access control, and effective governance.
 
 ---
