@@ -77,7 +77,7 @@ With the experience of working with hundreds of customers across EMEA, we've lea
 Most teams can manage JSON files. Far fewer can develop and maintain infrastructure code.
 Managing Terraform code directly increases cost and complexity. Our declarative JSON-based model simplifies IaC, reduces the need for specialized expertise, and enables faster deployments. All our assets—blueprints, add-ons, and workload extensions—use this consistent configuration approach, accelerating customer onboarding while maintaining control.
 
-### Why We Recommend Automation over manual Console Deployment?
+### Why do we recommend Automation over Manual Console Deployment?
 It is possible to implement our Landing Zone designs manually through the OCI Console using our reference architectures (One-OE, Multi-OE, or Multi-Tenancy). But this doesn't scale and introduces operational risk.
 Terraform automation lets you deploy and manage the resources in a consistent and repeatable manner. This reduces deployment time, operational costs, and manual effort while also dratically reducing the chance of human error.
 For automated depoloyment both OCI Resource Manager (ORM) and Terraform CLI are supported and customers can adopt automation at their own pace. This can be integrated with CI/CD tools like GitHub, GitLab, and Jenkins for full IaC and enterprise-grade pipelines. This ensures consistency, governance, and long-term efficiency.
@@ -85,10 +85,6 @@ For automated depoloyment both OCI Resource Manager (ORM) and Terraform CLI are 
 ### Why Use OCI Landing Zone Terraform Modules?
 Many customers, partners, and internal teams have built their own Terraform code to help manage Landing Zone deployments, duplicating effort and creating a maintenance overhead.
 The OCI Landing Zone Terraform modules are developed supported by the Oracle Product Development teams. These represent Oracle's recommended approach. They're standardized, aligned with CIS benchmarks, and continuously updated. By adopting them, you eliminate custom code maintenance, reduce operational risk, and get a supported, enterprise-grade foundation.
-
-### Why have an IaC automation approach? Landing Zones are a one-time setup, why not implement manually?
-Landing Zone setup is rarelt a one time setup as they will evolve over time requiring configuration additions and updates.
-Manual setup is possible, but automation reduces deployment time and reduces the chances of human error. IaC provides a single source of truth for the OCI tenancy infrastructure, making it easy to understand, repeat, audit, and scale.
 
 ### Why is OCI Resource Manager (ORM) preferred over Terraform CLI?
 OCI Resource Manager is a managed Terraform service that securely handles state files, execution, and access control within the OCI tenancy. Actions are performed by authenticated OCI users with proper authorization, reducing security and operational risks. Terraform CLI requires external execution platforms, credential handling, and manual state management, making ORM the more secure and governed option.
@@ -102,5 +98,5 @@ Our blueprints enable VCN Flow Logs by default because they are a fundamental se
 Flow Logs capture traffic metadata that are needed for threat detection, traffic analysis, and to ensure security compliance. Without them, there will be limited visibility of network access which can be critical in the event of a security incident. Without the detailed forensic network evidence it will very difficult to identify attackers, assess the breach scope, or contain threats effectively.
 
 ### Why do we require a dedicated Bucket for Audit Logs
-The default 365 day retention of the OCI Audit Logs meets PCI DSS and ISO 27001 requirements. However, some organizations require stricter regulations like for HIPAA, SOC or FINRA.
+The default 365 day retention of the OCI Audit Logs meets PCI DSS and ISO 27001 requirements. However, some organizations require stricter regulations like for HIPAA, SOC, FINRA or NIST 800-53.
 The blueprints implement a dedicated Object Storage bucket with the appropriate Service Connector for secure, long-term audit log retention. This ensures compliance, supports audit readiness, and preserves forensic data for extended investigations.
