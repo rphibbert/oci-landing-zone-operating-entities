@@ -42,10 +42,10 @@ In this add-on, we will focus specifically on the design of the **Identity Domai
 
 |Identity Domain Pattern|One-OE|Multi-OE|
 |---|---|---|
-|Common Domain|[❌](/addons/oci-hub-models/hub_a/readme.md), [✅](/addons/oci-hub-models/hub_b/readme.md), [C](/addons/oci-hub-models/hub_c/readme.md), [E](/addons/oci-hub-models/hub_e/readme.md)|[FinOps](/addons/oci-finops/README.md), [DNS](/addons/oci-private-dns/README.md)|
-|Environment Domains|[:tick:](/workload-extensions/oke/readme.md), [ExaCS](/workload-extensions/exacs/readme.md), [ExaCC](/workload-extensions/exacc/readme.md)|[EBS](/workload-extensions/ebs/readme.md), [OpenShift](/workload-extensions/openshift/README.md), [OCVS](/workload-extensions/ocvs/README.md)|
-|Region Domains|[OKE](/workload-extensions/oke/readme.md), [ExaCS](/workload-extensions/exacs/readme.md), [ExaCC](/workload-extensions/exacc/readme.md)|[EBS](/workload-extensions/ebs/readme.md), [OpenShift](/workload-extensions/openshift/README.md), [OCVS](/workload-extensions/ocvs/README.md)|
-|Operating Entity Domains|[OKE](/workload-extensions/oke/readme.md), [ExaCS](/workload-extensions/exacs/readme.md), [ExaCC](/workload-extensions/exacc/readme.md)|[EBS](/workload-extensions/ebs/readme.md), [OpenShift](/workload-extensions/openshift/README.md), [OCVS](/workload-extensions/ocvs/README.md)|
+|[Common Domain](#31-common-domain)|❌|✅|
+|[Common Domain](#31-common-domain)|❌|✅|
+|[Common Domain](#31-common-domain)|❌|✅|
+|[Common Domain](#31-common-domain)|❌|✅|
 
 
 
