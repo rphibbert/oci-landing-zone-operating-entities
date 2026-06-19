@@ -20,7 +20,7 @@
 Welcome to the **OCI Identity Domains** guide.
 
 <p align="center">
-  <img src="./images/oci-lz-ai-agent-flow.png" alt="Three step flow for AI guided Operating Entities setup" width="600">
+  <img src="images/common-identity-domain.png" alt="Three step flow for AI guided Operating Entities setup" width="600">
 </p>
 
 When designing an OCI tenancy landing zone, it is essential to establish a well-defined IAM (Identity and Access Management) security model from the outset. The IAM design forms the foundation of governance, security, and resource management within the environment. Key considerations include the tenancy structure, identity domains, compartment hierarchy, IAM policies, and access control strategy.
