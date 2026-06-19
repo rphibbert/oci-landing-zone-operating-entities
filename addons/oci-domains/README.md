@@ -96,100 +96,123 @@ Both the One-OE and Multi-OE landing zone blueprints have this as the default Id
 ### 3.2. Environment Domains
 
 In this design pattern there is a separate Identity Domain for each environment, for example:
-•	Production
-•	Pre-Production
-•	Test
-•	Development
+- Production
+- Pre-Production
+- Test
+- Development
 
-- Required environments, such as dev, test, prod.
-- Hub (DMZ) model and connectivity requirements.
-- CIDR allocation and known constraints.
-- Workloads to be deployed on top of OCI Landing Zone.
-- Security, observability, governance and compliance requirements.
+The purpose of this is to provide separation of the users and groups who can access the resources in each environment. For example, a user existing only in the Pre-Production domain would not be able to access any resources in the Production domain.
 
-The AI Agent works within the [Blueprint Factory](../oci-lz-blueprint-factory/README.md) to:
+#### IAM Domain Syntax for Environment Domain
+```text
+"identity_domains_configuration": {
+    "default_compartment_id"                               : null,
+    "default_defined_tags"                                 : null,
+    "default_freeform_tags"                                : null,
 
-1. **Discover**: AI asks questions to understand your landing zone requirements.
-2. **Select Templates**: AI identifies the best-fit published blueprint or determines if customization is needed.
-3. **Generate Configuration**: AI generates the JSON configs for the available scenarios.
-4. **Review**: AI reviews generated JSON before deployment and provides guidance towards deployment.
+    "identity_domains": {
+        "PROD-DOMAIN": {
+            "display_name"                                 : "id_lz_prod",
+            "description"                                  : "One-OE LZ Production Identity Domain",
+            "compartment_id"                               : null,
+            "admin_email"                                  : null,
+            "admin_first_name"                             : null,
+            "admin_last_name"                              : null,
+            "admin_user_name"                              : null,
+            "allow_signing_cert_public_access"             : false,
+            "home_region"                                  : null,
+            "is_hidden_on_login"                           : false,
+            "is_notification_bypassed"                     : false,
+            "is_primary_email_required"                    : false,
+            "license_type"                                 : "free",
+            "replica_region"                               : null
+        }
+    }
+}
+```
+&nbsp;
 
-This approach keeps AI assistance anchored in the repository landing zone patterns and best practices while enabling customization.
+### 3.3. Region Domains
 
-### Example of complete OKE one-shot prompt to Generate Landing Zone
+In this design pattern there is a separate Identity Domain for each region, for example:
+- EU (Frankfurt)
+- UK (London)
+- US (Ashburn)
+
+The purpose of this is to provide separation of the users and groups who can access the resources in each region. For example, a user existing only in the EU domain would not be able to access any resources in the UK or US domains.
+Note that only the Default Identity Domain is automatically replicated from the Home region to all the subscribed regions. When creating additional domains which are required outside the Home region they have to be explicitly synchronized/replicated to that region.
+
+#### IAM Domain Syntax for Environment Domain
+```text
+"identity_domains_configuration": {
+    "default_compartment_id"                               : null,
+    "default_defined_tags"                                 : null,
+    "default_freeform_tags"                                : null,
+
+    "identity_domains": {
+        "UK-DOMAIN": {
+            "display_name"                                 : "id_lz_uk",
+            "description"                                  : "One-OE LZ UK Region Identity Domain",
+            "compartment_id"                               : null,
+            "admin_email"                                  : null,
+            "admin_first_name"                             : null,
+            "admin_last_name"                              : null,
+            "admin_user_name"                              : null,
+            "allow_signing_cert_public_access"             : false,
+            "home_region"                                  : null,
+            "is_hidden_on_login"                           : false,
+            "is_notification_bypassed"                     : false,
+            "is_primary_email_required"                    : false,
+            "license_type"                                 : "free",
+            "replica_region"                               : "uk-london-1"
+        }
+    }
+}
+```
+> [!NOTE]
+> The Domain synchronization from the home region to the subscribed region is specified in above configuration with the "replica_region"
+
+&nbsp;
+
+### 3.4. Operating Entities Domains
+
+An Operating Entity is how a company can segregate it’s resources into organization units. For example:
+- LoBs
+- OpCos
+- Departments
+- Products
+- Brands
+- Partners
+
+The Multi-OE blueprint allows this segregation within a single tenancy using the compartment design.
+However, it could also be a requirement for further separation of the resources through use of an Identity Domain for each Operating Entity.
 
 ```text
-Create a reviewed OCI Landing Zone Operating Entities draft with these inputs:
-- Baseline: One-OE.
-- Hub: Hub B with OCI Network Firewall.
-- Region: eu-frankfurt-1.
-- Environments: dev and prod.
-- Workload: OKE is the only platform workload in both environments.
-- Connectivity: no on premises or other cloud connectivity.
-- CIDRs: hub VCN 10.0.0.0/20, dev OKE VCN 10.10.0.0/16, prod OKE VCN 10.20.0.0/16, dev services CIDR 172.16.0.0/16, prod services CIDR 172.17.0.0/16.
-- OKE sizing: one cluster per environment, dev up to 6 worker nodes, prod up to 12 worker nodes, 30 pods per node planning assumption.
-- Security: private worker nodes, baseline IAM, Cloud Guard, Security Zones, vulnerability scanning, logging and alarms.
-- Deployment source: private source controlled by the organization Gitlab runner.
-Prepare the draft and return blockers, warnings, assumptions and review items.
+"identity_domains_configuration": {
+    "default_compartment_id"                               : null,
+    "default_defined_tags"                                 : null,
+    "default_freeform_tags"                                : null,
+
+    "identity_domains": {
+        "OE01-DOMAIN": {
+            "display_name"                                 : "id_lz_oe01",
+            "description"                                  : "Multi-OE LZ OE01 Identity Domain",
+            "compartment_id"                               : null,
+            "admin_email"                                  : null,
+            "admin_first_name"                             : null,
+            "admin_last_name"                              : null,
+            "admin_user_name"                              : null,
+            "allow_signing_cert_public_access"             : false,
+            "home_region"                                  : null,
+            "is_hidden_on_login"                           : false,
+            "is_notification_bypassed"                     : false,
+            "is_primary_email_required"                    : false,
+            "license_type"                                 : "free",
+            "replica_region"                               : null
+        }
+    }
+}
 ```
-
-### Example of minimal prompt, triggering AI to walk through discovery process
-
-```text
-I want a landing zone with OKE.
-```
-
-
-### Currently supported add-ons and workloads:
-
-||Released|Available Soon|
-|---|---|---|
-|Add-ons|[Hub A](/addons/oci-hub-models/hub_a/readme.md), [B](/addons/oci-hub-models/hub_b/readme.md), [C](/addons/oci-hub-models/hub_c/readme.md), [E](/addons/oci-hub-models/hub_e/readme.md)|[FinOps](/addons/oci-finops/README.md), [DNS](/addons/oci-private-dns/README.md)|
-|Extensions|[OKE](/workload-extensions/oke/readme.md), [ExaCS](/workload-extensions/exacs/readme.md), [ExaCC](/workload-extensions/exacc/readme.md)|[EBS](/workload-extensions/ebs/readme.md), [OpenShift](/workload-extensions/openshift/README.md), [OCVS](/workload-extensions/ocvs/README.md)|
-
-&nbsp;
-
-### 2.3. Run & Deploy
-
-AI will deliver deployable assets as JSON files with documentation. Review all assets before deployment.
-
-Before deployment:
-
-- Review all artifacts for correctness, security and compliance.
-- Confirm the CIDR plan does not overlap with connected OCI, on premises or other cloud networks.
-- Confirm unsupported resources are not hidden inside generated artifacts.
-- Confirm deployment sources are private and controlled by your organization.
-- If using OCI Resource Manager to deploy the landing zone, stage files in a private Object Storage bucket or private GitHub source controlled by your organization.
-
-Follow additional documentation for both deployment paths of Landing Zones:
-
-- [Terraform deployment guide](../../commons/content/terraform.md)
-- [OCI Resource Manager deployment guide](../../commons/content/orm.md)
-
-&nbsp;
-
-## 3. Engineered Security from the Ground-up
-
-AI assistance remains anchored in the OCI Landing Zone Operating Entities repository model. The AI agent creates or updates structured inputs and review artifacts. It does not invent landing zone files from memory or produce deployment artifacts outside the repository model.
-
-The [Blueprint Factory](../oci-lz-blueprint-factory/README.md) provides the foundational input layer that keeps the design traceable and repeatable. It helps prevent arbitrary landing zone output from AI memory and halucinations by keeping design intent aligned with repository owned landing zone patterns.
-
-- **Structured design surface**: Landing zone intent is captured in a structured format before deployment artifacts are considered.
-- **Repository based behavior**: Outputs are derived from OCI Landing Zone Operating Entities repository logic.
-- **Repeatable Composition**: The same inputs always produce identical JSON outputs, supporting GitOps workflows.
-- **Reviewable change**: Design updates are inspected as focused diffs before deployment.
-- **Reduced hallucination risk**: AI cannot invent resources outside the generator's contract. Unsupported requirements are clearly marked as manual post-deployment steps.
-- **Ownership boundary**: AI assists with drafting and review while architecture, security, compliance and deployment approval remain with your organization.
-
-Review [Blueprint Factory Add-on](../oci-lz-blueprint-factory/README.md) for more details.
-
-&nbsp;
-
-## 4. Complementary Resources
-
-- **[Blueprint Factory Documentation](../oci-lz-blueprint-factory/README.md)** - Deep dive into how the Blueprint Factory works, including architecture, composition patterns, and advanced customization techniques.
-- **[One-OE Blueprint](../../blueprints/one-oe/design)** - Landing zone design principles and architecture
-
 &nbsp;
 
 #### License
