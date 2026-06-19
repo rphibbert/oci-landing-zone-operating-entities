@@ -42,34 +42,64 @@ In this add-on, we will focus specifically on the design of the **Identity Domai
 
 |Identity Domain Pattern|One-OE|Multi-OE|
 |---|---|---|
-|[Common Domain](#31-common-domain)|❌|✅|
-|[Common Domain](#31-common-domain)|❌|✅|
-|[Common Domain](#31-common-domain)|❌|✅|
-|[Common Domain](#31-common-domain)|❌|✅|
+|[Common Domain](#31-common-domain)|✅|✅|
+|[Environment Domains](#32-environment-domains)|✅|✅|
+|[Region Domains](#33-region-domains)|✅|✅|
+|[Operating Entity Domains](#34-operating-entities-domains)|❌|✅|
 
+&nbsp;
+## 3. Domain Design
 
+Following best practice, the default Identity Domain should be reserved exclusively for break-glass accounts used for emergency access. All other users, groups, and access management functions should be managed within separate Identity Domains.
 
 &nbsp;
 
-### 2.1. Prepare Your AI
+### 3.1. Common Domain
 
-Before using this addon:
+In this design a single dedicated Common Identity Domain is created to host shared groups and related identity management resources.
+Both the One-OE and Multi-OE landing zone blueprints have this as the default Identity Domain design.
 
-1. Select an AI coding agent that fits organizational security and operational requirements.
-1. Install and configure the selected AI coding agent with official documentation, such as the [Codex App documentation](https://developers.openai.com/codex/app) or [Claude Code setup](https://code.claude.com/docs/en/setup).
-1. Install Jsonnet which is required for LZ generation. Make sure the `jsonnet` command is available on `$PATH`. For installation instruction use the [Google go-jsonnet repository](https://github.com/google/go-jsonnet).
-1. Clone the OCI Landing Zone Operating Entities repository locally.
-1. Always make sure to launch your agent in the Operating Entities folder you've cloned.
+<p align="center">
+  <img src="images/common-identity-domain.png" alt="Common Identity Domain Design" width="600">
+</p>
 
-Keep source files and deployment artifacts in private, secure location controlled by your organization.
+#### IAM Domain Syntax for Common Domain
+```text
+"identity_domains_configuration": {
+    "default_compartment_id"                               : null,
+    "default_defined_tags"                                 : null,
+    "default_freeform_tags"                                : null,
+
+    "identity_domains": {
+        "COMMON-DOMAIN": {
+            "display_name"                                 : "id_lz_common",
+            "description"                                  : "One-OE LZ common Identity Domain",
+            "compartment_id"                               : null,
+            "admin_email"                                  : null,
+            "admin_first_name"                             : null,
+            "admin_last_name"                              : null,
+            "admin_user_name"                              : null,
+            "allow_signing_cert_public_access"             : false,
+            "home_region"                                  : null,
+            "is_hidden_on_login"                           : false,
+            "is_notification_bypassed"                     : false,
+            "is_primary_email_required"                    : false,
+            "license_type"                                 : "free",
+            "replica_region"                               : null
+        }
+    }
+}
+```
 
 &nbsp;
 
-### 2.2. AI Guides the Setup
+### 3.2. Environment Domains
 
-Start by describing the landing zone outcome, business context, technical constraints, security and compliance requirements. The AI coding agent works from the relevant repository knowledge and walks you through identifying and validating your requirements. Generating landing zone and the next steps for reviewing and deploying to OCI.
-
-Recommended inputs:
+In this design pattern there is a separate Identity Domain for each environment, for example:
+•	Production
+•	Pre-Production
+•	Test
+•	Development
 
 - Required environments, such as dev, test, prod.
 - Hub (DMZ) model and connectivity requirements.
