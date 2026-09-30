@@ -108,7 +108,7 @@ Both the One-OE and Multi-OE landing zone blueprints have this as the default Id
 }
 ```
 
-The One-OE file: - [oneoe_iam.json](./../blueprints/one-oe/runtime/one-stack/oneoe_iam.json)
+The One-OE file: - [oneoe_iam.json](../../blueprints/one-oe/runtime/one-stack/oneoe_iam.json)
 
 &nbsp;
 
