@@ -122,6 +122,10 @@ In this design pattern there is a separate Identity Domain for each environment,
 
 The purpose of this is to provide separation of the users and groups who can access the resources in each environment. For example, a user existing only in the Pre-Production domain would not be able to access any resources in the Production domain.
 
+<p align="center">
+  <img src="images/environment-identity-domain.png" alt="Environment Identity Domain Design" width="600">
+</p>
+
 #### IAM Domain Syntax for Environment Domain
 ```text
 "identity_domains_configuration": {
@@ -160,6 +164,10 @@ In this design pattern there is a separate Identity Domain for each region, for 
 
 The purpose of this is to provide separation of the users and groups who can access the resources in each region. For example, a user existing only in the EU domain would not be able to access any resources in the UK or US domains.
 Note that only the Default Identity Domain is automatically replicated from the Home region to all the subscribed regions. When creating additional domains which are required outside the Home region they have to be explicitly synchronized/replicated to that region.
+
+<p align="center">
+  <img src="images/region-identity-domain.png" alt="Region Identity Domain Design" width="600">
+</p>
 
 #### IAM Domain Syntax for Environment Domain
 ```text
@@ -205,6 +213,10 @@ An Operating Entity is how a company can segregate it’s resources into organiz
 
 The Multi-OE blueprint allows this segregation within a single tenancy using the compartment design.
 However, it could also be a requirement for further separation of the resources through use of an Identity Domain for each Operating Entity.
+
+<p align="center">
+  <img src="images/operating-entity-identity-domain.png" alt="Operating Entity Identity Domain Design" width="600">
+</p>
 
 ```text
 "identity_domains_configuration": {
