@@ -10,8 +10,8 @@
 - [3. Domain Design](#3-domain-design)<br>
   - [3.1. Common Domain](#31-common-domain)<br>
   - [3.2. Environment Domains](#32-environment-domains)<br>
-  - [3.3. Region Domains](#33-region-domains)<br>
-  - [3.4. Operating Entities Domains](#34-operating-entities-domains)<br>
+  - [3.3. Operating Entities Domains](#33-operating-entities-domains)<br>
+  - [3.4. Region Domains](#34-region-domains)<br>
 - [4. Domain Federation](#4-domain-federation)<br>
   - [4.1. Federation Overview](#41-federation-overview)<br>
   - [4.2. Default Domain](#42-default-domain)<br>
@@ -44,8 +44,8 @@ In this add-on, we will focus specifically on the design of the **Identity Domai
 |---|---|---|
 |[Common Domain](#31-common-domain)|Included|Included|
 |[Environment Domains](#32-environment-domains)|Optional|Optional|
-|[Region Domains](#33-region-domains)|Optional|Optional|
-|[Operating Entity Domains](#34-operating-entities-domains)|N/A|Optional|
+|[Operating Entity Domains](#33-operating-entities-domains)|N/A|Optional|
+|[Region Domains](#34-region-domains)|Optional|Optional|
 
 &nbsp;
 ## 3. Domain Design
@@ -153,9 +153,57 @@ The purpose of this is to provide separation of the users and groups who can acc
     }
 }
 ```
+
+The Environment Domain IAM file: - [oneoe_env_iam.json](./oneoe_env_iam.json)
+
 &nbsp;
 
-### 3.3. Region Domains
+### 3.3. Operating Entities Domains
+
+An Operating Entity is how a company can segregate it’s resources into organization units. For example:
+- LoBs
+- OpCos
+- Departments
+- Products
+- Brands
+- Partners
+
+The Multi-OE blueprint allows this segregation within a single tenancy using the compartment design.
+However, it could also be a requirement for further separation of the resources through use of an Identity Domain for each Operating Entity.
+
+<p align="center">
+  <img src="images/operating-entity-identity-domain.png" alt="Operating Entity Identity Domain Design" width="600">
+</p>
+
+```text
+"identity_domains_configuration": {
+    "default_compartment_id"                               : null,
+    "default_defined_tags"                                 : null,
+    "default_freeform_tags"                                : null,
+
+    "identity_domains": {
+        "OE01-DOMAIN": {
+            "display_name"                                 : "id_lz_oe01",
+            "description"                                  : "Multi-OE LZ OE01 Identity Domain",
+            "compartment_id"                               : null,
+            "admin_email"                                  : null,
+            "admin_first_name"                             : null,
+            "admin_last_name"                              : null,
+            "admin_user_name"                              : null,
+            "allow_signing_cert_public_access"             : false,
+            "home_region"                                  : null,
+            "is_hidden_on_login"                           : false,
+            "is_notification_bypassed"                     : false,
+            "is_primary_email_required"                    : false,
+            "license_type"                                 : "free",
+            "replica_region"                               : null
+        }
+    }
+}
+```
+&nbsp;
+
+### 3.4. Region Domains
 
 In this design pattern there is a separate Identity Domain for each region, for example:
 - EU (Frankfurt)
@@ -201,50 +249,6 @@ Note that only the Default Identity Domain is automatically replicated from the 
 >
 &nbsp;
 
-### 3.4. Operating Entities Domains
-
-An Operating Entity is how a company can segregate it’s resources into organization units. For example:
-- LoBs
-- OpCos
-- Departments
-- Products
-- Brands
-- Partners
-
-The Multi-OE blueprint allows this segregation within a single tenancy using the compartment design.
-However, it could also be a requirement for further separation of the resources through use of an Identity Domain for each Operating Entity.
-
-<p align="center">
-  <img src="images/operating-entity-identity-domain.png" alt="Operating Entity Identity Domain Design" width="600">
-</p>
-
-```text
-"identity_domains_configuration": {
-    "default_compartment_id"                               : null,
-    "default_defined_tags"                                 : null,
-    "default_freeform_tags"                                : null,
-
-    "identity_domains": {
-        "OE01-DOMAIN": {
-            "display_name"                                 : "id_lz_oe01",
-            "description"                                  : "Multi-OE LZ OE01 Identity Domain",
-            "compartment_id"                               : null,
-            "admin_email"                                  : null,
-            "admin_first_name"                             : null,
-            "admin_last_name"                              : null,
-            "admin_user_name"                              : null,
-            "allow_signing_cert_public_access"             : false,
-            "home_region"                                  : null,
-            "is_hidden_on_login"                           : false,
-            "is_notification_bypassed"                     : false,
-            "is_primary_email_required"                    : false,
-            "license_type"                                 : "free",
-            "replica_region"                               : null
-        }
-    }
-}
-```
-&nbsp;
 ## 4. Domain Federation
 
 ### 4.1. Federation Overview
