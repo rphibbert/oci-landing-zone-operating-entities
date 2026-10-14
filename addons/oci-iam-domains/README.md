@@ -294,16 +294,19 @@ Use the OCI secondary identity domains for normal user access. They can separate
 The identity domains represent separate user populations. The structure is discussed in further detail here:
 [Oracle: IAM Security Structure](https://docs.oracle.com/en-us/iaas/Content/cloud-adoption-framework/iam-security-structure.htm)
 
+#### Flow of Users and Groups from External IdP to Common Domain
 ```mermaid
 flowchart LR
-    U[Users] --> I[External IdP<br/>e.g. Microsoft Entra ID]
-    I -->|SAML SSO| D1[OCI Secondary Domain<br/>Development]
-    I -->|SAML SSO| D2[OCI Secondary Domain<br/>Production]
+    U[Users and Groups] --> I[External IdP<br/>e.g. Microsoft Entra ID]
+    I -->|SAML SSO| D1[OCI Secondary Domain<br/>COMMON]
 
-    D1 --> P1[OCI groups and IAM policies<br/>Development access]
-    D2 --> P2[OCI groups and IAM policies<br/>Production access]
+    D1 --> P1[OCI groups and IAM policies<br/>COMMON access]
+```
 
-    B[Local break-glass administrators] --> D0[OCI Default Domain]
+#### Flow of Break-Glass Users and Group within the Default Domain
+```mermaid
+flowchart LR
+    B[Local Break-Glass Administrators] --> D0[OCI DEFAULT Domain]
     D0 --> A[Tenancy-level administration]
 ```
 
