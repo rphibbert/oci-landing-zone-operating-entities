@@ -154,7 +154,7 @@ The purpose of this is to provide separation of the users and groups who can acc
 }
 ```
 
-The Environment Domain IAM file: - [oneoe_env_iam.json](./oneoe_env_iam.json)
+The Environment Domains IAM file: - [oneoe_env_iam.json](./oneoe_env_iam.json)
 
 &nbsp;
 
@@ -175,6 +175,7 @@ However, it could also be a requirement for further separation of the resources 
   <img src="images/operating-entity-identity-domain.png" alt="Operating Entity Identity Domain Design" width="600">
 </p>
 
+#### IAM Domain Syntax for Operating Entities Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -201,14 +202,17 @@ However, it could also be a requirement for further separation of the resources 
     }
 }
 ```
+
+The Operating Entities Domains IAM file: - [multioe_oe_iam.json](./multioe_oe_iam.json)
+
 &nbsp;
 
 ### 3.4. Region Domains
 
 In this design pattern there is a separate Identity Domain for each region, for example:
 - EU (Frankfurt)
-- UK (London)
 - US (Ashburn)
+- UK (London)
 
 The purpose of this is to provide separation of the users and groups who can access the resources in each region. For example, a user existing only in the EU domain would not be able to access any resources in the UK or US domains.
 Note that only the Default Identity Domain is automatically replicated from the Home region to all the subscribed regions. When creating additional domains which are required outside the Home region they have to be explicitly synchronized/replicated to that region.
@@ -217,7 +221,7 @@ Note that only the Default Identity Domain is automatically replicated from the 
   <img src="images/region-identity-domain.png" alt="Region Identity Domain Design" width="600">
 </p>
 
-#### IAM Domain Syntax for Environment Domain
+#### IAM Domain Syntax for Region Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -225,9 +229,9 @@ Note that only the Default Identity Domain is automatically replicated from the 
     "default_freeform_tags"                                : null,
 
     "identity_domains": {
-        "UK-DOMAIN": {
+        "US-DOMAIN": {
             "display_name"                                 : "id_lz_uk",
-            "description"                                  : "One-OE LZ UK Region Identity Domain",
+            "description"                                  : "Multi-OE LZ US Identity Domain",
             "compartment_id"                               : null,
             "admin_email"                                  : null,
             "admin_first_name"                             : null,
@@ -239,11 +243,14 @@ Note that only the Default Identity Domain is automatically replicated from the 
             "is_notification_bypassed"                     : false,
             "is_primary_email_required"                    : false,
             "license_type"                                 : "free",
-            "replica_region"                               : "uk-london-1"
+            "replica_region"                               : "us-ashburn-1"
         }
     }
 }
 ```
+
+The Region Domains IAM file: - [multioe_region_iam.json](./multioe_region_iam.json)
+
 > [!NOTE]
 > The Domain synchronization from the home region to the subscribed region is specified in above configuration with the "replica_region"
 >
