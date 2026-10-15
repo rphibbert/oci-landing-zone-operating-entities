@@ -16,8 +16,12 @@
   - [4.1. Federation Overview](#41-federation-overview)<br>
   - [4.2. Default Domain](#42-default-domain)<br>
   - [4.3. Secondary Domain Federation](#43-secondary-domain-federation)<br>
+- - [4.4. IAM Groups and External Identity Provisioning](#44-iam-groups-and-external-identity-provisioning)<br>
+- - [4.5. Federation Steps](#45-federation-steps)<br>
 - [5. Fusion SaaS Domains](#5-fusion-saas-domains)<br>
-  - [5.1. Fusion SaaS Overview](#41-fusion-saas-overview)<br>
+  - [5.1. Fusion SaaS Overview](#51-fusion-saas-overview)<br>
+  - [5.2. Fusion SaaS Domain](#52-fusion-saas-domain)<br>
+  - [5.3. Fusion SaaS Domains and OCI Domains](#53-fusion-saas-overview)<br>
   
 
 &nbsp;
@@ -67,7 +71,10 @@ This guide will cover some of the options available.
 The decision on whether to keep all the Users and Groups in the Common domain or divide it further will be primarily based on how the operation of the resources need to be managed.
 - Where there is a requirement to clearly divide the users accessing Production and Non-Production resources. If this is the case then [Environment Domains](#32-environment-domains) design pattern can be followed
 - Every tenancy has a Home region, for example Frankfurt, the tenancy can be subscribed to additional OCI regions as required. If there is a requirement to restrict the users and groups to specific regions then the [Region Domains](#33-region-domains) design pattern can be used.
-- In the Multi-OE Blueprint the tenancy can be separated into different Operating Entities in based on the organizational requirements. Further segregation of the Operating Entities can be achieved by also creating a separate domain for each OE following the [Operating Entity Domains](#34-operating-entities-domains) design pattern.
+- In the Multi-OE Blueprint the tenancy can be separated into different Operating Entities based on the organizational requirements. Further segregation of the Operating Entities can be achieved by also creating a separate domain for each OE (Operating Entity) following the [Operating Entity Domains](#34-operating-entities-domains) design pattern.
+
+Identity domains separate users, groups, authentication settings, and identity administration.
+OCI IAM policies determine which resources those identities can access. Environment, Operating Entity, and Regional isolation therefore requires appropriately scoped policies alongside the domain design.
 
 &nbsp;
 
@@ -80,7 +87,7 @@ Both the One-OE and Multi-OE landing zone blueprints have this as the default Id
   <img src="images/common-identity-domain.png" alt="Common Identity Domain Design" width="600">
 </p>
 
-#### IAM Domain Syntax for Common Domain
+#### IAM Domain Syntax Snippet for Common Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -108,7 +115,7 @@ Both the One-OE and Multi-OE landing zone blueprints have this as the default Id
 }
 ```
 
-The One-OE file: - [oneoe_iam.json](../../blueprints/one-oe/runtime/one-stack/oneoe_iam.json)
+For a deployable example of this domain design refer to the One-OE file: - [oneoe_iam.json](../../blueprints/one-oe/runtime/one-stack/oneoe_iam.json)
 
 &nbsp;
 
@@ -120,13 +127,14 @@ In this design pattern there is a separate Identity Domain for each environment,
 - Test
 - Development
 
-The purpose of this is to provide separation of the users and groups who can access the resources in each environment. For example, a user existing only in the Pre-Production domain would not be able to access any resources in the Production domain.
+The purpose of this is to provide the ability to separate of the users and groups who can access the resources in each environment. For example, a user existing only in the Pre-Production domain would not be able to access any resources in the Production compartments.
+
 
 <p align="center">
   <img src="images/environment-identity-domain.png" alt="Environment Identity Domain Design" width="600">
 </p>
 
-#### IAM Domain Syntax for Environment Domain
+#### IAM Domain Syntax Snippet for Environment Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -154,15 +162,15 @@ The purpose of this is to provide separation of the users and groups who can acc
 }
 ```
 
-The Environment Domains IAM file: - [oneoe_env_iam.json](./oneoe_env_iam.json)
+For a deployable example of this domain design refer to the Environment Domains IAM file: - [oneoe_env_iam.json](./oneoe_env_iam.json)
 
 &nbsp;
 
 ### 3.3. Operating Entities Domains
 
-An Operating Entity is how a company can segregate it’s resources into organization units. For example:
-- LoBs
-- OpCos
+An Operating Entity is how a company can segregate its resources into organization units. For example:
+- LoBs (Line of Business)
+- OpCos (Operating Company)
 - Departments
 - Products
 - Brands
@@ -175,7 +183,7 @@ However, it could also be a requirement for further separation of the resources 
   <img src="images/operating-entity-identity-domain.png" alt="Operating Entity Identity Domain Design" width="600">
 </p>
 
-#### IAM Domain Syntax for Operating Entities Domain
+#### IAM Domain Syntax Snippet for Operating Entities Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -183,9 +191,9 @@ However, it could also be a requirement for further separation of the resources 
     "default_freeform_tags"                                : null,
 
     "identity_domains": {
-        "OE01-DOMAIN": {
-            "display_name"                                 : "id_lz_oe01",
-            "description"                                  : "Multi-OE LZ OE01 Identity Domain",
+        "OE1-DOMAIN": {
+            "display_name"                                 : "id_lz_oe1",
+            "description"                                  : "Multi-OE LZ OE1 Identity Domain",
             "compartment_id"                               : null,
             "admin_email"                                  : null,
             "admin_first_name"                             : null,
@@ -203,7 +211,7 @@ However, it could also be a requirement for further separation of the resources 
 }
 ```
 
-The Operating Entities Domains IAM file: - [multioe_oe_iam.json](./multioe_oe_iam.json)
+For a deployable example of this domain design refer to the Operating Entities Domains IAM file: - [multioe_oe_iam.json](./multioe_oe_iam.json)
 
 &nbsp;
 
@@ -214,14 +222,22 @@ In this design pattern there is a separate Identity Domain for each region, for 
 - US (Ashburn)
 - UK (London)
 
+The Multi-OE blueprint allows this segregation within a single tenancy using the compartment design but it is also possible to use the One-OE blueprint.
+
 The purpose of this is to provide separation of the users and groups who can access the resources in each region. For example, a user existing only in the EU domain would not be able to access any resources in the UK or US domains.
 Note that only the Default Identity Domain is automatically replicated from the Home region to all the subscribed regions. When creating additional domains which are required outside the Home region they have to be explicitly synchronized/replicated to that region.
+There are 3 relevant decisions:
+- **Domain Home Region** -  where the identity domain is homed.
+- **Domain Replication** -  where that domain is available.
+- **Resource Access** - which compartments, services, and regions its groups can access, specified by the IAM policies
+
+Allow group 'id_lz_us'/'grp-lz-us-network-admin' to manage virtual-network-family in compartment cmp-lz-us where request.region = 'IAD'
 
 <p align="center">
   <img src="images/region-identity-domain.png" alt="Region Identity Domain Design" width="600">
 </p>
 
-#### IAM Domain Syntax for Region Domain
+#### IAM Domain Syntax Snippet for Region Domain
 ```text
 "identity_domains_configuration": {
     "default_compartment_id"                               : null,
@@ -230,7 +246,7 @@ Note that only the Default Identity Domain is automatically replicated from the 
 
     "identity_domains": {
         "US-DOMAIN": {
-            "display_name"                                 : "id_lz_uk",
+            "display_name"                                 : "id_lz_us",
             "description"                                  : "Multi-OE LZ US Identity Domain",
             "compartment_id"                               : null,
             "admin_email"                                  : null,
@@ -249,7 +265,7 @@ Note that only the Default Identity Domain is automatically replicated from the 
 }
 ```
 
-The Region Domains IAM file: - [multioe_region_iam.json](./multioe_region_iam.json)
+For a deployable example of this domain design refer to the Region Domains IAM file: - [multioe_region_iam.json](./multioe_region_iam.json)
 
 > [!NOTE]
 > The Domain synchronization from the home region to the subscribed region is specified in above configuration with the "replica_region"
@@ -268,13 +284,10 @@ OCI IAM remains responsible for authorization: users are placed into OCI groups 
 
 ### 4.2. Default Domain
 
-The OCI default identity domain should be retained for a small number of local tenancy-administration and break-glass accounts.
+It is recommended that the OCI default identity domain be retained for a small number of break-glass accounts.
 
 For a break-glass design, do not use federation as the only authentication route to the default domain. Keep local, named emergency administrator accounts so tenancy administration remains available if the external IdP, SAML configuration, certificates, or corporate authentication service is unavailable.
 
-It is recommended to use the default identity domain for tenancy-level administration, and using secondary identity domains for the domain designs as described in the sections above.
-
-For a break-glass design, do not use federation as the only authentication route to the default domain. Keep local, named emergency administrator accounts so tenancy administration remains available if the external IdP, SAML configuration, certificates, or corporate authentication service is unavailable.
 Break-glass accounts should:
 - Be local OCI accounts, individually assigned and never shared.
 - Use strong MFA and securely controlled recovery information.
@@ -313,19 +326,39 @@ flowchart LR
 > [!NOTE]
 > Each secondary domain is configured independently with the external IdP.
 
-### 4.4. IAM Groups Federation
+### 4.4. IAM Groups and External Identity Provisioning
 
-When the IAM Domain is federated the IdP will master the IAM Groups. These will be synchronised to OCI, typically through SCIM.
-In this scenarion the IAM Groups should be removed from the LZ IAM JSON configuration to be created by the IdP.
+Federation and identity provisioning perform different functions:
+- Federation, typically using SAML 2.0, allows users to authenticate using their corporate identity provider (IdP).
+- Provisioning, typically using SCIM or an identity connector, creates and updates users, groups, and group memberships in the OCI identity domain.
 
-Consideration should be given to the naming convention of the IAM Groups in the IdP.
-For simplicity it is generally recommended to keep the IdP and IAM Groups naming convention the same. However it is possible to use different naming together with mapping. In this case care must be taken in the administration of the groups and mappings.
+Configuring federation does not automatically synchronize users or groups. Provisioning must be configured separately. Alternatively, users can be created manually or through configured just-in-time (JIT) provisioning.
 
-The IAM Group Names must be reflected in the IAM Policies and the policy statements may need to be updated to match the updated IAM Group Names mastered in the IdP.
-Also note that the IAM Policies will need to be compiled after the IAM Groups have been created.
+#### Group Ownership
 
-The default IAM Group Names for One-OE are shown below:
+Before configuring provisioning, decide which system owns group creation and which system manages membership.
 
+| Ownership Model | Group Creation | Group Membership |
+|---|---|---|
+| Landing Zone managed groups | The landing zone creates and manages the OCI groups | Membership can be managed either in OCI or externally using a compatible provisioning configuration |
+| Externally managed groups | The external identity system provisions the groups into OCI | The external identity system manages membership |
+
+For **Landing Zone managed groups**, retain the group definitions in the IAM JSON configuration. Configure the provisioning integration to use those groups without creating duplicates or competing with the landing zone over group ownership.
+
+For **Externally managed groups** in a new deployment, omit the group definitions in the IAM JSON configuration, the provisioning integration will create them. Ensure that the groups exist in the correct OCI identity domain before creating policies that reference them.
+
+#### Group Naming and Policy References
+
+Using the same group names in the external identity system and OCI simplifies administration. Different names can be used where the provisioning integration supports explicit mappings however you must document and maintain those mappings.
+
+OCI IAM policies must reference the OCI group name, including its identity domain for groups in secondary domains. For example:
+```text
+Allow group 'id_lz_common'/'grp-lz-network-admin' to manage virtual-network-family in compartment cmp-lz-network
+```
+
+If provisioning changes a group’s OCI name or places it in a different domain, update the corresponding policy statements.
+
+The default One-OE groups are:
 | Group Name | Draw.io Name | Description |
 |---|---|---|
 | `grp-auditors-admin` | Auditors Admin | Tenancy-scoped audit and read-only access group. |
@@ -337,10 +370,12 @@ The default IAM Group Names for One-OE are shown below:
 | `grp-lz-prod-proj1-admin` | LZ Prod Proj1 Admin | Landing Zone Production environment, Project 1 administration access group. |
 | `grp-lz-security-admin` | LZ Security Admin | Landing Zone shared security administration access group. |
 
+These names apply to the standard One-OE Common-domain configuration. Environment, Operating Entity, and Region configurations introduce additional groups and domain assignments.
+
 ### 4.5. Federation Steps
 
 1. The LZ will create the IAM Domain which will be federated, for example the **Common** domain.
-2. The Common IAM domain will be manually federated with the externall IdP [Federating with Identity Providers](https://docs.oracle.com/en-us/iaas/Content/Identity/federating/federating_section.htm)
+2. The Common IAM domain will be manually federated with the external IdP [Federating with Identity Providers](https://docs.oracle.com/en-us/iaas/Content/Identity/federating/federating_section.htm)
 3. The IAM Groups are created in the IdP and synchronised to IAM
 4. The IAM policy statements are verified with the IAM Group names and compiled
 
@@ -348,13 +383,13 @@ The default IAM Group Names for One-OE are shown below:
 ## 5. Fusion SaaS Domains
 
 ### 5.1. Fusion SaaS Overview
-In a tenancy where Fusion SaaS applications will be deployed often the activation of the SaaS environments is the first deployment to the tenancy.
+In a tenancy where Fusion SaaS applications will be deployed often the activation of the SaaS environments is the first deployment to the tenancy [Activation Guidance](https://docs.oracle.com/en-us/iaas/Content/applications-manager/activate-applications.htm) 
 
-If Fusion SaaS activation creates the new OCI tenancy, and the person entered as the first administrator is created in the tenancy’s Default identity domain with OCI **Administrator** group.
+If Fusion SaaS activation creates the new OCI tenancy, and the person entered as the first administrator is created in the tenancy’s Default identity domain with OCI **Administrators** group.
 
 This OCI Default domain administrator is distinct from normal Fusion application users. Fusion environments use their own Fusion Applications identity domain for application users and roles
 
-Within the Landing Zone the Fusion Applications Administrator by default should be and IAM Group in the Common Domain with the policies as defined here: [Fusion Applications Environment Administrator](https://docs.oracle.com/en-us/iaas/Content/fusion-applications/fa-add-apps-users.htm#fa-roles)
+Within the Landing Zone the Fusion Applications Administrator by default should be an IAM Group in the Common Domain with the policies as defined here: [Fusion Applications Environment Administrator](https://docs.oracle.com/en-us/iaas/Content/fusion-applications/fa-add-apps-users.htm#fa-roles)
 
 ### 5.2. Fusion SaaS Domain
 
@@ -366,7 +401,7 @@ It is often not really possible to infer the environment ownership from the IAM 
 The Fusion environment and it's associated domain can be viewed in the OCI Console Menu:
 OCI Console → My Applications → Fusion Applications → select environment → Associated identity domain
 
-### 5.2. Fusion SaaS Domains and OCI Domains
+### 5.3. Fusion SaaS Domains and OCI Domains
 
 In many cases the Fusion SaaS environment domains and OCI Secondary domains will be maintained separate user populations as the functions are usually different.
 For example: A Fusion SaaS Production environment will contain all the users who have access to login and use the Fusion application whilst the OCI Production domain is for the user population who have access to create, modify and view the OCI PaaS and IaaS services.
@@ -374,7 +409,7 @@ For example: A Fusion SaaS Production environment will contain all the users who
 In some cases the number of Fusion SaaS environment domains may not be 1:1 with the OCI domains.
 For example Fusion can have 3 environments Production, Test, Development but the OCI only has the Common domain. 
 
-For certain OCI services, like OIC, in a PaaS4SaaS tenancy the users may be in the Fusion SaaS domain
+For certain OCI services, like OIC in a PaaS4SaaS (Platform as a Service for Software as a Service) tenancy, the users may be in the Fusion SaaS domain
 https://docs.oracle.com/en/cloud/saas/applications-common/26c/oaext/provision-a-new-platform-as-a-service-into-a-fusion-identity-and-access-management-domain-.html
 
 
